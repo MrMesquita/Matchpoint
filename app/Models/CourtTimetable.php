@@ -23,6 +23,11 @@ class CourtTimetable extends Model
         return $this->belongsTo(Court::class);
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
     public function getStatusAttribute($value)
     {
         return EnumsCourtTimetableStatus::from($value); 

@@ -12,15 +12,20 @@ class User extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nome',
-        'documento',
-        'telefone',
+        'name',
+        'document',
+        'phone',
         'email',
-        'senha',
+        'password',
         'is_admin'
     ];
 
     protected $hidden = [
-        'senha',
+        'password',
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'id_customer');
+    }
 }
