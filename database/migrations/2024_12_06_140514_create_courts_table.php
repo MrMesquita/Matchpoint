@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Booking;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,14 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('courts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('document')->unique();
-            $table->string('phone')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->boolean('is_admin')->default(false);
+            $table->string('identification');
+            $table->integer('capacity');
+            $table->foreignId('id_arena')->constrained('arenas');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,10 +28,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            if (Schema::hasColumn('reservations', 'id_customer')) {
-                $table->dropForeign(['id_customer']);
+            if (Schema::hasColumn('reservations', 'id_court')) {
+                $table->dropForeign(['id_court']);
             }
         });
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('courts');
     }
 };
