@@ -17,12 +17,12 @@ class Arena extends Model
         'city',
         'state',
         'zip_code',
-        'id_admin'
+        'admin_id'
     ];
 
     public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
 
     public function courts()

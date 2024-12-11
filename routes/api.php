@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/status', function () {
-    return response()->json("Server on");
+    return response()->json(['status' => 'Server on'], 200);
+});
+
+
+Route::prefix('/auth')->group(function () {
+    Route::post('/register', [AuthController::class, 'login']);
 });

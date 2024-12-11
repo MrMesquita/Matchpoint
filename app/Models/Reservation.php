@@ -11,15 +11,15 @@ class Reservation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_customer',
-        'id_court',
-        'id_court_timetable',
+        'customer_id',
+        'court_id',
+        'court_timetable_id',
         'status'
     ];
 
     public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class, 'id_user');
     }
     
     public function court()
