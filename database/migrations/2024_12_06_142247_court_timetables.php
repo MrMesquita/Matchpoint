@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('court_timelables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_court')->constrained('courts')->onDelete('cascade');
+            $table->foreignId('court_id')->constrained('courts')->onDelete('cascade');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');

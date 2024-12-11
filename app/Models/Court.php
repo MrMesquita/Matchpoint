@@ -12,7 +12,7 @@ class Court extends Model
     protected $fillable = [
         'identification',
         'capacity',
-        'id_arena'
+        'arena_id'
     ];
 
     public function arena()
@@ -22,7 +22,7 @@ class Court extends Model
 
     public function courtTimelables()
     {
-        return $this->hasMany(CourtTimetables::class);
+        return $this->hasMany(CourtTimetable::class);
     }
 
     public function reservations()
