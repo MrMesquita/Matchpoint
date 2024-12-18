@@ -10,7 +10,7 @@ class Payout extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_reservation',
+        'reservation_id',
         'amount',
         'date',
         'method',
