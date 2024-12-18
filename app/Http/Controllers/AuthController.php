@@ -2,47 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
-class AuthController
+class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    private $authService;
+
+    public function __construct(AuthService $authService) {
+        $this->authService = $authService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $token = $this->authService->attemptLogin($request->only(['email', 'password']));
+        return success_response(['token' => $token]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function logout(Request $request)
     {
-        //
+        $this->authService->logout($request);
+        return json_response([
+            'success' => true,
+            'message' => 'logged out successfully'
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function register(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $token = $this->authService->registerCustomer($request);
+        return success_response(['token' => $token], null, 201);
     }
 }

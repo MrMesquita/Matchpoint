@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Constants\UserTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     public $timestamps = true;
 
@@ -46,11 +48,16 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->type === 'admin';
+        return $this->type === UserTypes::ADMIN;
     }
 
     public function isCustomer()
     {
-        return $this->type === 'customer';
+        return $this->type === UserTypes::CUSTOMER;
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->type === UserTypes::SUPERADMIN;
     }
 }
