@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('arenas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_admin')->constrained('users');
+            $table->unsignedBigInteger('admin_id');
             $table->string('name');
             $table->string('street');
             $table->integer('number');

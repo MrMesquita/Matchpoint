@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\UserTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +15,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('document')->unique();
+            $table->string('surname');
             $table->string('phone')->unique();
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->default(false);
+            $table->string('type')->default(UserTypes::CUSTOMER);
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });

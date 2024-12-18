@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_customer')->constrained('users');
-            $table->foreignId('id_court')->constrained('courts');
-            $table->foreignId('id_court_timetable')->constrained('court_timelables');
+            $table->unsignedBigInteger('customer_id');
+            $table->foreignId('court_id')->constrained('courts');
+            $table->foreignId('court_timetable_id')->constrained('court_timelables');
             $table->enum('status', ['CANCELED', 'CONFIRMED', 'PENDING'])->default('PENDING');
             $table->timestamps();
             $table->softDeletes();
