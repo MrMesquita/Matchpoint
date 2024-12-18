@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/status', function () {
-    return json_response(['status' => 'Server on']);
+    return json_response(['status' => "It's running"]);
 });
 
 Route::prefix('/auth')->group(function () {

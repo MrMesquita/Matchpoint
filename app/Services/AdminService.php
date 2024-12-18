@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -40,7 +41,6 @@ class AdminService
     public function deleteAdmin(string $id)
     {
         $admin = $this->findAdminOrFail($id);
-
         $this->deleteAdminRecord($admin);
     }
 
@@ -73,7 +73,7 @@ class AdminService
     {
         $admin = Admin::find($id);
         if (!$admin) {
-            throw new NotFoundResourceException('Admin not found', 404);
+            throw new NotFoundResourceException('Admin not found', Response::HTTP_NOT_FOUND);
         }
 
         return $admin;

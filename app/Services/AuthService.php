@@ -18,7 +18,6 @@ class AuthService
     public function attemptLogin(array $credentials)
     {
         $this->validateCredentials($credentials);
- 
         if (!Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
                 'login' => ['Email e/ou senha inválido'],
@@ -27,7 +26,6 @@ class AuthService
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
         return $user->createToken($user->name, ['*'], now()->addDays(3))->plainTextToken;
     }
 
