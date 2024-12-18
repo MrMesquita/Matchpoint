@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('surname');
             $table->string('phone')->unique();
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('type')->default(UserTypes::CUSTOMER);
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
