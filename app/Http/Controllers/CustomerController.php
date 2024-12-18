@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class CustomerController extends Controller
@@ -29,7 +30,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $customer = $this->customerService->createCustomer($request);
-        return success_response($customer, null, 201);
+        return success_response($customer, "Customer created successfully", Response::HTTP_CREATED);
     }
 
     /**
@@ -56,6 +57,6 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         $this->customerService->deleteCustomer($id);
-        return json_response([], null, 204);
+        return success_response(null, null, 204);
     }
 }

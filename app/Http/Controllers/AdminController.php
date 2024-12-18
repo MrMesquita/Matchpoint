@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
@@ -30,7 +30,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $admin = $this->adminService->createAdmin($request);
-        return success_response($admin, null, 201);
+        return success_response($admin, null, Response::HTTP_CREATED);
     }
 
     /**
@@ -57,6 +57,6 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         $this->adminService->deleteAdmin($id);
-        return success_response([], null, 204);
+        return success_response(null, null, Response::HTTP_NO_CONTENT);
     }
 }

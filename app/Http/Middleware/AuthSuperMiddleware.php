@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,11 +20,11 @@ class AuthSuperMiddleware
         /** @var \App\Models\User $user */
         $user = Auth::user();
         if (!$user) {
-            return error_response('Usuário não autenticado', null, 401);
+            return error_response("User doesn't authenticated", null, HttpResponse::HTTP_UNAUTHORIZED);
         }
 
         if (!$user->isSuperAdmin()) {
-            return error_response('Acesso negado', null, 403);
+            return error_response('Unauthorized', null, HttpResponse::HTTP_FORBIDDEN);
         }
 
         return $next($request);

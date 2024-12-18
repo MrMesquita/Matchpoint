@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class AuthController extends Controller
@@ -23,15 +24,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $this->authService->logout($request);
-        return json_response([
-            'success' => true,
-            'message' => 'logged out successfully'
-        ]);
+        return success_response(null, ['message' => 'logged out successfully']);
     }
 
     public function register(Request $request)
     {
         $token = $this->authService->registerCustomer($request);
-        return success_response(['token' => $token], null, 201);
+        return success_response(['token' => $token], "Registred successfully", Response::HTTP_CREATED);
     }
 }

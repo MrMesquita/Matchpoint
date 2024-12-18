@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -71,7 +72,7 @@ class CustomerService
     {
         $customer = Customer::find($id);
         if (!$customer) {
-            throw new NotFoundResourceException('Customer not found', 404);
+            throw new NotFoundResourceException('Customer not found', Response::HTTP_NOT_FOUND);
         }
 
         return $customer;
