@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArenaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Middleware\AuthSuperMiddleware;
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum', AuthSuperMiddleware::class])->group(function(
         Route::get('/', [AdminController::class, 'index'])->name('admins.index');
         Route::post('/', [AdminController::class, 'store'])->name('admins.store');
         Route::get('/{admin}', [AdminController::class, 'show'])->name('admins.show');
+        Route::get('/{admin}/arenas', [AdminController::class, 'arenas'])->name('admins.arenas');
         Route::put('/{admin}', [AdminController::class, 'update'])->name('admins.update');
         Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
     });
@@ -32,5 +34,13 @@ Route::middleware(['auth:sanctum', AuthSuperMiddleware::class])->group(function(
         Route::get('/{customer}', [CustomerController::class, 'show'])->name('customers.show');
         Route::put('/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    });
+
+    Route::prefix('/arenas')->group(function () {
+        Route::get('/', [ArenaController::class, 'index'])->name('arenas.index');
+        Route::post('/{admin}', [ArenaController::class, 'store'])->name('arenas.store');
+        Route::get('/{customer}', [ArenaController::class, 'show'])->name('arenas.show');
+        Route::put('/{customer}', [ArenaController::class, 'update'])->name('arenas.update');
+        Route::delete('/{customer}', [ArenaController::class, 'destroy'])->name('arenas.destroy');
     });
 });

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admin;
+use App\Models\Arena;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,12 @@ class AdminService
     {
         $admin = $this->findAdminOrFail($id);
         $this->deleteAdminRecord($admin);
+    }
+
+    public function getArenas(string $id)
+    {
+        $admin = $this->findAdminOrFail($id);
+        return $admin->arenas()->get();
     }
 
     private function validateAdminData(Request $request, Admin $admin = null): array
