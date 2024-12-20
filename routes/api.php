@@ -23,9 +23,11 @@ Route::middleware(['auth:sanctum', AuthSuperMiddleware::class])->group(function(
         Route::get('/', [AdminController::class, 'index'])->name('admins.index');
         Route::post('/', [AdminController::class, 'store'])->name('admins.store');
         Route::get('/{admin}', [AdminController::class, 'show'])->name('admins.show');
-        Route::get('/{admin}/arenas', [AdminController::class, 'arenas'])->name('admins.arenas');
         Route::put('/{admin}', [AdminController::class, 'update'])->name('admins.update');
         Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
+        
+        Route::get('/{admin}/arenas', [AdminController::class, 'arenas'])->name('admins.arenas');
+        Route::post('/{admin}/arenas', [AdminController::class, 'storeArena'])->name('admins.arenas.store');
     });
 
     Route::prefix('/customers')->group(function () {
@@ -38,9 +40,8 @@ Route::middleware(['auth:sanctum', AuthSuperMiddleware::class])->group(function(
 
     Route::prefix('/arenas')->group(function () {
         Route::get('/', [ArenaController::class, 'index'])->name('arenas.index');
-        Route::post('/{admin}', [ArenaController::class, 'store'])->name('arenas.store');
-        Route::get('/{customer}', [ArenaController::class, 'show'])->name('arenas.show');
-        Route::put('/{customer}', [ArenaController::class, 'update'])->name('arenas.update');
-        Route::delete('/{customer}', [ArenaController::class, 'destroy'])->name('arenas.destroy');
+        Route::get('/{arena}', [ArenaController::class, 'show'])->name('arenas.show');
+        Route::put('/{arena}', [ArenaController::class, 'update'])->name('arenas.update');
+        Route::delete('/{arena}', [ArenaController::class, 'destroy'])->name('arenas.destroy');
     });
 });
