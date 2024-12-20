@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
 {
-    private $adminService;
+    private AdminService $adminService;
 
     public function __construct(AdminService $adminService)
     {
@@ -40,6 +40,15 @@ class AdminController extends Controller
     {
         $admin = $this->adminService->getAdminById($id);
         return success_response($admin);
+    }
+
+    /**
+     * Display all arenas by adminId
+     */
+    public function arenas(string $adminId)
+    {
+        $arenas = $this->adminService->getArenas($adminId);
+        return success_response($arenas);
     }
 
     /**
