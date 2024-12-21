@@ -56,8 +56,8 @@ class User extends Authenticatable
         return $this->type === UserTypes::CUSTOMER;
     }
 
-    public function isSuperAdmin()
+    public function isSystem()
     {
-        return $this->type === UserTypes::SUPERADMIN;
+        return $this->type === UserTypes::SYSTEM;
     }
 }

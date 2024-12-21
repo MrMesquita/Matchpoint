@@ -11,14 +11,15 @@ function json_response(array $data, int $code = Response::HTTP_OK)
 function success_response($results, $message = null, int $code = Response::HTTP_OK)
 {
     $response = ['success' => true];
+    
+    if (!is_null($message)) {
+        $response['message'] = $message;
+    }
 
     if (!is_null($results)) {
         $response['results'] = $results instanceof Collection || is_array($results) ? $results : [$results];
     }
 
-    if (!is_null($message)) {
-        $response['message'] = $message;
-    }
 
     return json_response($response, $code);
 }

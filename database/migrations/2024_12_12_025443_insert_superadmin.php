@@ -15,10 +15,10 @@ return new class extends Migration
         DB::table('users')->insert([
             'name' => 'Super Admin',
             'surname' => 'Default',
-            'phone' => env('SUPERADMIN_PHONE'),
-            'email' => env('SUPERADMIN_EMAIL'),
-            'password' => Hash::make(env('SUPERADMIN_PASSWORD')),
-            'type' => UserTypes::SUPERADMIN,
+            'phone' => env('SYSTEM_PHONE'),
+            'email' => env('SYSTEM_EMAIL'),
+            'password' => Hash::make(env('SYSTEM_PASSWORD')),
+            'type' => UserTypes::SYSTEM,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::table('users')->where('email', env('SUPERADMIN_EMAIL'))->delete();
+        DB::table('users')->where('email', env('SYSTEM_EMAIL'))->delete();
     }
 };

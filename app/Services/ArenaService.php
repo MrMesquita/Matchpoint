@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\AdminNotFoundException;
+use App\Exceptions\ArenaNotFoundException;
+use App\Models\Admin;
 use App\Models\Arena;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
+use Illuminate\Support\Facades\Auth;
 
 class ArenaService
 {
@@ -14,15 +16,11 @@ class ArenaService
         return Arena::all();
     }
 
-    public function createArena(Request $request, string $adminID): Arena
+    public function save(Request $request): Arena
     {
-        $data = $this->validateArenaData($request);
-        $arena = new Arena([...$data, 'admin_id' => $adminID]);
-
-        $arena->save();
-
-        return $arena;
-    }
+        $validated = $this->validateArenaData($request);
+        return Arena::create(array_merge($validated));
+    }    
 
     public function getArenaById(string $id)
     {
@@ -47,22 +45,36 @@ class ArenaService
 
     public function validateArenaData(Request $request): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:50',
             'street' => 'required|string|max:50',
             'number' => 'required|string|max:50',
             'neighborhood' => 'required|string|max:50',
             'city' => 'required|string|max:50',
             'state' => 'required|string|max:50',
-            'zip_code' => 'required|string|max:50'
+            'zip_code' => 'required|string|max:50',
+            'admin_id' => 'required'
         ]);
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        if (!Admin::find($validated['admin_id'])) {
+            throw new AdminNotFoundException();
+        }
+
+        if ($user->isAdmin()) {
+            $validated['admin_id'] = $user->id;
+        }
+
+        return $validated;
     }
 
     public function findArenaOrFail(string $id): Arena
     {
         $arena = Arena::find($id);
         if (!$arena) {
-            throw new NotFoundResourceException('Arena not found', Response::HTTP_NOT_FOUND);
+            throw new ArenaNotFoundException();
         }
 
         return $arena;

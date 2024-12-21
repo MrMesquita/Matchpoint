@@ -27,10 +27,10 @@ class ArenaController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $adminID)
+    public function store(Request $request)
     {
-        $arena = $this->arenaService->createArena($request, $adminID);
-        return success_response($arena, null, Response::HTTP_CREATED);
+        $arena = $this->arenaService->save($request);
+        return success_response($arena, "Arena created successfully", Response::HTTP_CREATED);
     }
 
     /**
