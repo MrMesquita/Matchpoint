@@ -2,16 +2,24 @@
 
 namespace App\Services;
 
+use App\Exceptions\AdminNotFoundException;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
+use Illuminate\Validation\UnauthorizedException;
 
 class AdminService
 {
+    private $arenaService;
+
+    public function __construct(ArenaService $arenaService)
+    {
+        $this->arenaService = $arenaService;
+    }
+
     public function getAllAdmins()
     {
         return Admin::all();
@@ -44,6 +52,14 @@ class AdminService
         $this->deleteAdminRecord($admin);
     }
 
+    public function getArenas()
+    {
+        $admin = Admin::find(Auth::id());
+
+        $arenas = $admin->arenas()->get();
+        return $arenas;
+    }
+
     private function validateAdminData(Request $request, Admin $admin = null): array
     {
         $uniquePhoneRule = $admin
@@ -73,7 +89,7 @@ class AdminService
     {
         $admin = Admin::find($id);
         if (!$admin) {
-            throw new NotFoundResourceException('Admin not found', Response::HTTP_NOT_FOUND);
+            throw new AdminNotFoundException();
         }
 
         return $admin;
@@ -91,5 +107,11 @@ class AdminService
     private function deleteAdminRecord(Admin $admin): void
     {
         $admin->delete();
+    }
+
+    public function createArena(Request $request)
+    {
+        $arena = $this->arenaService->save($request);
+        return $arena;
     }
 }
