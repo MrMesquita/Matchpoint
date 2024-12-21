@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomerNotFoundException;
 use App\Models\Customer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -72,7 +74,7 @@ class CustomerService
     {
         $customer = Customer::find($id);
         if (!$customer) {
-            throw new NotFoundResourceException('Customer not found', Response::HTTP_NOT_FOUND);
+            throw new CustomerNotFoundException();
         }
 
         return $customer;

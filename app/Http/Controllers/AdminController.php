@@ -6,6 +6,8 @@ use App\Services\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -32,7 +34,7 @@ class AdminController extends Controller
         $admin = $this->adminService->createAdmin($request);
         return success_response($admin, null, Response::HTTP_CREATED);
     }
-
+    
     /**
      * Display the specified resource.
      */
@@ -40,15 +42,6 @@ class AdminController extends Controller
     {
         $admin = $this->adminService->getAdminById($id);
         return success_response($admin);
-    }
-
-    /**
-     * Display all arenas by adminId
-     */
-    public function arenas(string $adminId)
-    {
-        $arenas = $this->adminService->getArenas($adminId);
-        return success_response($arenas);
     }
 
     /**
@@ -67,5 +60,26 @@ class AdminController extends Controller
     {
         $this->adminService->deleteAdmin($id);
         return success_response(null, null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function createArena(Request $request)
+    {
+        Log::info('Controller Debug', [
+            'user' => Auth::user(),
+        ]);
+        $arena = $this->adminService->createArena($request);
+        return success_response($arena, null, Response::HTTP_CREATED);
+    }
+
+    /**
+     * Display all arenas by adminId
+     */
+    public function arenas(Request $request)
+    {
+        $arenas = $this->adminService->getArenas($request);
+        return success_response($arenas);
     }
 }
