@@ -5,10 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-class AuthSystemMiddleware
+class AuthSystemOrAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,8 +23,8 @@ class AuthSystemMiddleware
             return error_response("User doesn't authenticated", null, HttpResponse::HTTP_UNAUTHORIZED);
         }
 
-        if (!$user->isSystem()) {
-            return error_response('Unauthorized 2', null, HttpResponse::HTTP_FORBIDDEN);
+        if (!$user->isSystem() && !$user->isAdmin()) {
+            return error_response('Unauthorized 3', null, HttpResponse::HTTP_FORBIDDEN);
         }
 
         return $next($request);

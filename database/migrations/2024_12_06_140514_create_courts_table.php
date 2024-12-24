@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('courts', function (Blueprint $table) {
             $table->id();
-            $table->string('identification');
+            $table->string('name');
             $table->integer('capacity');
             $table->foreignId('arena_id')->constrained('arenas');
             $table->timestamps();

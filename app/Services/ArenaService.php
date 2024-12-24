@@ -13,23 +13,50 @@ class ArenaService
 {
     public function getAllArenas()
     {
-        return Arena::all();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($user->isSystem()) {
+            return Arena::all();
+        }
+
+        if ($user->isAdmin()) {
+            $admin = Admin::find($user->id);
+
+            return $admin ? $admin->arenas : collect();
+        }
+
+        return collect();
     }
 
     public function save(Request $request): Arena
     {
         $validated = $this->validateArenaData($request);
-        return Arena::create(array_merge($validated));
-    }    
+        return Arena::create($validated);
+    }
 
     public function getArenaById(string $id)
     {
-        return $this->findArenaOrFail($id);
+        $arena = $this->findArenaOrFail($id);
+
+        $this->authorizeArenaAccess($arena);
+
+        return $arena;
+    }
+
+    public function getCourts(string $id)
+    {
+        $arena = $this->findArenaOrFail($id);
+        $this->authorizeArenaAccess($arena);
+
+        return $arena->courts()->get();
     }
 
     public function updateArena(Request $request, string $id): Arena
     {
         $arena = $this->findArenaOrFail($id);
+
+        $this->authorizeArenaAccess($arena);
 
         $data = $this->validateArenaData($request);
         $arena->update($data);
@@ -40,10 +67,13 @@ class ArenaService
     public function deleteArena(string $id): void
     {
         $arena = $this->findArenaOrFail($id);
+
+        $this->authorizeArenaAccess($arena);
+
         $arena->delete();
     }
 
-    public function validateArenaData(Request $request): array
+    private function validateArenaData(Request $request): array
     {
         $validated = $request->validate([
             'name' => 'required|string|max:50',
@@ -53,12 +83,12 @@ class ArenaService
             'city' => 'required|string|max:50',
             'state' => 'required|string|max:50',
             'zip_code' => 'required|string|max:50',
-            'admin_id' => 'required'
+            'admin_id' => 'required',
         ]);
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!Admin::find($validated['admin_id'])) {
             throw new AdminNotFoundException();
         }
@@ -70,13 +100,28 @@ class ArenaService
         return $validated;
     }
 
-    public function findArenaOrFail(string $id): Arena
+    private function findArenaOrFail(string $id): Arena
     {
         $arena = Arena::find($id);
+
         if (!$arena) {
             throw new ArenaNotFoundException();
         }
 
         return $arena;
+    }
+
+    private function authorizeArenaAccess(Arena $arena): void
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($user->isSystem()) {
+            return; 
+        }
+
+        if ($user->isAdmin() && $arena->admin_id !== $user->id) {
+            throw new ArenaNotFoundException();
+        }
     }
 }
