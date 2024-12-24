@@ -52,12 +52,10 @@ class AdminService
         $this->deleteAdminRecord($admin);
     }
 
-    public function getArenas()
+    public function getArenas($adminId = null)
     {
-        $admin = Admin::find(Auth::id());
-
-        $arenas = $admin->arenas()->get();
-        return $arenas;
+        $admin = $this->findAdminOrFail($adminId ?? Auth::id());
+        return $admin->arenas->all();
     }
 
     private function validateAdminData(Request $request, Admin $admin = null): array

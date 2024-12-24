@@ -4,13 +4,23 @@ namespace App\Services;
 
 use App\Exceptions\CourtNotFoundException;
 use App\Exceptions\AdminNotFoundException;
+use App\Exceptions\ArenaNotFoundException;
 use App\Models\Admin;
+use App\Models\Arena;
 use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CourtService
 {
+    private ArenaService $arenaService;
+    private AdminService $adminService;
+
+    public function __construct(ArenaService $arenaService, AdminService $adminService)
+    {
+        $this->arenaService = $arenaService;
+        $this->adminService = $adminService;
+    }
     public function getAllCourts()
     {
         /** @var \App\Models\User $user */
@@ -45,6 +55,7 @@ class CourtService
         $court = $this->findCourtOrFail($id);
         $this->authorizeCourtAccess($court);
         $data = $this->validateCourtData($request);
+        
         $court->update($data);
         return $court;
     }
@@ -68,7 +79,12 @@ class CourtService
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            $validated['arena_id'] = $this->getAdminArenaId($user);
+            $adminArenas = $this->adminService->getArenas();
+            $arenaSent = $this->arenaService->getArenaById($validated['arena_id']);
+
+            if (!in_array($arenaSent, $adminArenas)) {
+                $validated['arena_id'] = $adminArenas[0];
+            }
         }
 
         return $validated;
@@ -92,16 +108,6 @@ class CourtService
         if ($user->isAdmin() && $court->arena->admin_id !== $user->id) {
             throw new CourtNotFoundException();
         }
-    }
-
-    protected function getAdminArenaId($user)
-    {
-        $admin = Admin::find($user->id);
-        if ($admin && $admin->arenas->isNotEmpty()) {
-            return $admin->arenas->first()->id;
-        }
-
-        throw new AdminNotFoundException();
     }
 
     protected function findCourtOrFail(string $id): Court
