@@ -15,18 +15,13 @@ class ArenaService
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if ($user->isSystem()) {
-            return Arena::all();
-        }
-
         if ($user->isAdmin()) {
             $admin = Admin::find($user->id);
-
+            
             return $admin ? $admin->arenas : collect();
         }
 
-        return collect();
+        return Arena::all();
     }
 
     public function save(Request $request): Arena
@@ -38,7 +33,6 @@ class ArenaService
     public function getArenaById(string $id)
     {
         $arena = $this->findArenaOrFail($id);
-
         $this->authorizeArenaAccess($arena);
 
         return $arena;
@@ -115,10 +109,6 @@ class ArenaService
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if ($user->isSystem()) {
-            return; 
-        }
 
         if ($user->isAdmin() && $arena->admin_id !== $user->id) {
             throw new ArenaNotFoundException();
