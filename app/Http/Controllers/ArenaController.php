@@ -41,6 +41,15 @@ class ArenaController
         $arena = $this->arenaService->getArenaById($id);
         return success_response($arena);
     }
+    
+    /**
+     * Display the courts by arenaId resource.
+     */
+    public function courts(string $id)
+    {
+        $arena = $this->arenaService->getCourts($id);
+        return success_response($arena);
+    }
 
     /**
      * Update the specified resource in storage.
