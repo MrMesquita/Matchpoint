@@ -24,7 +24,7 @@ class AuthSystemMiddleware
         }
 
         if (!$user->isSystem()) {
-            return error_response('Unauthorized 2', null, HttpResponse::HTTP_FORBIDDEN);
+            return error_response('Unauthorized', null, HttpResponse::HTTP_FORBIDDEN);
         }
 
         return $next($request);
