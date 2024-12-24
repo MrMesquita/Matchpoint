@@ -5,21 +5,22 @@ namespace App\Models;
 use App\Enums\ReservationStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'id_customer',
-        'id_court',
-        'id_court_timetable',
+        'customer_id',
+        'court_id',
+        'court_timetable_id',
         'status'
     ];
 
     public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
     
     public function court()

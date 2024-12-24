@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('courts', function (Blueprint $table) {
             $table->id();
-            $table->string('identification');
+            $table->string('name');
             $table->integer('capacity');
-            $table->foreignId('id_arena')->constrained('arenas');
+            $table->foreignId('arena_id')->constrained('arenas');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,8 +28,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            if (Schema::hasColumn('reservations', 'id_court')) {
-                $table->dropForeign(['id_court']);
+            if (Schema::hasColumn('reservations', 'court_id')) {
+                $table->dropForeign(['court_id']);
             }
         });
         Schema::dropIfExists('courts');
