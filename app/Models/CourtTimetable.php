@@ -11,7 +11,7 @@ class CourtTimetable extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_court',
+        'court_id',
         'date',
         'start_time',
         'end_time',

@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Court extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'identification',
+        'name',
         'capacity',
-        'id_arena'
+        'arena_id'
     ];
 
     public function arena()
@@ -22,7 +23,7 @@ class Court extends Model
 
     public function courtTimelables()
     {
-        return $this->hasMany(CourtTimetables::class);
+        return $this->hasMany(CourtTimetable::class);
     }
 
     public function reservations()
