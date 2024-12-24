@@ -24,7 +24,7 @@ class AuthAdminMiddleware
         }
 
         if (!$user->isAdmin()) {
-            return error_response('Unauthorized', null, HttpResponse::HTTP_FORBIDDEN);
+            return error_response('Unauthorized 1', null, HttpResponse::HTTP_FORBIDDEN);
         }
 
         return $next($request);
