@@ -25,16 +25,11 @@ class CourtService
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if ($user->isSystem()) {
-            return Court::all();
-        }
-
         if ($user->isAdmin()) {
             return $this->getAdminCourts($user);
         }
-
-        return collect();
+        
+        return Court::all();
     }
 
     public function save(Request $request): Court
@@ -100,11 +95,7 @@ class CourtService
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if ($user->isSystem()) {
-            return;
-        }
-
+        
         if ($user->isAdmin() && $court->arena->admin_id !== $user->id) {
             throw new CourtNotFoundException();
         }
