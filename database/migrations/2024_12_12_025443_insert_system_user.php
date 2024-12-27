@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::table('users')->insert([
-            'name' => 'Super Admin',
-            'surname' => 'Default',
+            'name' => 'System',
+            'surname' => 'User',
             'phone' => env('SYSTEM_PHONE'),
             'email' => env('SYSTEM_EMAIL'),
             'password' => Hash::make(env('SYSTEM_PASSWORD')),

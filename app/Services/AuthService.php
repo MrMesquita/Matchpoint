@@ -44,8 +44,8 @@ class AuthService
 
     public function registerCustomer(Request $request)
     {
-        $password = $request->input('password');
         $customer = $this->customerService->createCustomer($request);
+        $password = $request->input('password');
     
         return $this->attemptLogin([
             'email' => $customer->email,
