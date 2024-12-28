@@ -30,13 +30,13 @@ function handleExceptions(Exceptions $exceptions)
     })->renderable(function (UnauthorizedException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_UNAUTHORIZED);
     })->renderable(function (AdminNotFoundException $e) {
-        return error_response($e->getMessage(), null, $e->getCode());
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (ArenaNotFoundException $e) {
-        return error_response($e->getMessage(), null, $e->getCode());
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (CustomerNotFoundException $e) {
         return error_response($e->getMessage(), null, $e->getCode());
     })->renderable(function (CourtNotFoundException $e) {
-        return error_response($e->getMessage(), null, $e->getCode());
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (Exception $e) {
         return error_response($e, null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });
