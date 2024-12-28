@@ -13,12 +13,9 @@ use Illuminate\Validation\UnauthorizedException;
 
 class AdminService
 {
-    private $arenaService;
-
-    public function __construct(ArenaService $arenaService)
-    {
-        $this->arenaService = $arenaService;
-    }
+    public function __construct(
+        private ArenaService $arenaService
+    ) { }
 
     public function getAllAdmins()
     {

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
 
-describe("admin logout test", function() {
+describe("auth logout admin", function() {
     test("connected admin tries to log out", function() {
         $admin =  Admin::create([
             "name" => "Marcelo",
