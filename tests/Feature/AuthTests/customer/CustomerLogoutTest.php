@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
 
-describe("customer logout test", function() {
+describe("auth logout customer", function() {
     test("connected customer tries to log out", function() {
         $customer = Customer::create([
             "name" => "Marcelo",

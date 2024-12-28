@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-describe("sytem logout test", function() {
+describe("auth logout system", function() {
     test("connected system tries to log out", function() {
         $systemUser = User::where('email', env('SYSTEM_EMAIL'))->first();
         $response = $this->actingAs($systemUser)->postJson(route('auth.logout'));
