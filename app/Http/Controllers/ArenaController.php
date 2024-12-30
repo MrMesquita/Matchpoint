@@ -8,13 +8,9 @@ use Illuminate\Http\Response;
 
 class ArenaController
 {
-
-    private ArenaService $arenaService;
-
-    public function __construct(ArenaService $arenaService)
-    {
-        $this->arenaService = $arenaService;
-    }
+    public function __construct(
+        private ArenaService $arenaService
+    ) { }
 
     /**
      * Display a listing of the resource.
