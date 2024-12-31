@@ -24,7 +24,7 @@ class AuthSystemOrAdminMiddleware
         }
 
         if (!$user->isSystem() && !$user->isAdmin()) {
-            return error_response('Unauthorized', null, HttpResponse::HTTP_FORBIDDEN);
+            return error_response('Unauthorized', null, HttpResponse::HTTP_UNAUTHORIZED);
         }
 
         return $next($request);
