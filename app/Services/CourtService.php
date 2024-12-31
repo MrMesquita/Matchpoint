@@ -10,6 +10,7 @@ use App\Models\Arena;
 use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class CourtService
 {
@@ -65,17 +66,22 @@ class CourtService
     protected function validateCourtData(Request $request): array
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('courts')->where('arena_id', $request->input('arena_id')),
+            ],
             'capacity' => 'required|integer|min:1',
-            'arena_id' => 'required|exists:arenas,id',
+            'arena_id' => 'required'
         ]);
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        $arenaSent = $this->arenaService->getArenaById($validated['arena_id']);
 
         if ($user->isAdmin()) {
             $adminArenas = $this->adminService->getArenas();
-            $arenaSent = $this->arenaService->getArenaById($validated['arena_id']);
 
             if (!in_array($arenaSent, $adminArenas)) {
                 $validated['arena_id'] = $adminArenas[0];
