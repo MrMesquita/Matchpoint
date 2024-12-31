@@ -3,43 +3,44 @@
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Arena;
+use App\Models\Court;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->adminUser = Admin::factory()->count(1)->create()->first();
+    $this->adminUser = Admin::factory()->create();
     $this->systemUser = User::where('email', env('SYSTEM_EMAIL'))->first();
-    $this->arena = Arena::factory()->count(1)->create(['admin_id' => $this->adminUser->id])->first();
+    $this->arena = Arena::factory()->create(['admin_id' => $this->adminUser->id]);
+    $this->court = Court::factory()->create(['arena_id' => $this->arena->id]);
 });
 
-describe('destroy an arena', function () {
-    test("admin can be destroy an arena", function () {
+describe('destroy a court', function () {
+    test("admin can destroy a court", function () {
         $response = $this->actingAs($this->adminUser)
             ->deleteJson(
-                route('arenas.destroy', ['arena' => $this->arena->id])
+                route('courts.destroy', ['court' => $this->court->id])
             );
     
         expect($response->getStatusCode())->toBe(204);
-        expect(Arena::where('id', $this->arena->id)->exists())->toBeFalse();
+        expect(Court::where('id', $this->court->id)->exists())->toBeFalse();
     });
 
-    test("system can be destroy an arena", function () {
-        $newArena = Arena::factory()->count(1)->create()->first();
+    test("system can destroy a court", function () {
+        $newCourt = Court::factory()->create();
         $response = $this->actingAs($this->systemUser)
             ->deleteJson(
-                route('arenas.destroy', ['arena' => $newArena->id])
+                route('courts.destroy', ['court' => $newCourt->id])
             );
     
         expect($response->getStatusCode())->toBe(204);
-        expect(Arena::where('id', $newArena->id)->exists())->toBeFalse();
+        expect(Court::where('id', $newCourt->id)->exists())->toBeFalse();
     });
 
-    test('try to destroy an arena without logged in', function() {
-        $response = $this
-            ->deleteJson(
-                route('arenas.destroy', ['arena' => $this->arena->id])
-            );
+    test('try to destroy a court without logged in', function() {
+        $response = $this->deleteJson(
+            route('courts.destroy', ['court' => $this->court->id])
+        );
 
         expect($response->status())->toBe(401);
         expect($response->json())->toHaveKeys(['success', 'message']);
@@ -47,10 +48,12 @@ describe('destroy an arena', function () {
         expect($response->json('message'))->toBeString();
     });
 
-    test("admin try to destroy an arena that doesn't exist or that doesn't belong to him", function() {
+    test("admin try to destroy a court that doesn't exist or that doesn't belong to him", function() {
+        $newCourt = Court::factory()->create();
         $response = $this->actingAs($this->adminUser)
             ->deleteJson(
-                route('arenas.destroy', ['arena' => 0])
+                route('courts.destroy', 
+                ['court' => $newCourt->id])
             );
 
         expect($response->status())->toBe(404);

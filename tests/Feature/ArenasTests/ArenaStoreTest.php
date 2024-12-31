@@ -32,17 +32,20 @@ describe('store an arena', function () {
         expect($response->json('success'))->toBeTrue();
         expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
         expect($response->json('results')[0])->toMatchArray([
-            "name" => "Arena 1",
-            "street" => "Rua lagoa",
-            "number" => "44",
-            "neighborhood" => "Bairro",
-            "city" => "Vitoria",
-            "state" => "PE",
-            "zip_code" => "55606900",
+            "name" => $this->arenaData['name'],
+            "street" => $this->arenaData['street'],
+            "number" => $this->arenaData['number'],
+            "neighborhood" => $this->arenaData['neighborhood'],
+            "city" => $this->arenaData['city'],
+            "state" => $this->arenaData['state'],
+            "zip_code" => $this->arenaData['zip_code'],
             "admin_id" => $this->adminUser->id
         ]);
         
-        expect(Arena::where('name', 'Arena 1')->where('admin_id', $this->adminUser->id)->exists())->toBeTrue();
+        expect(Arena::where('name', $this->arenaData['name'])
+            ->where('admin_id', $this->adminUser->id)
+            ->exists()
+        )->toBeTrue();
     });
 
     test("system can be store an arena", function () {
@@ -56,13 +59,13 @@ describe('store an arena', function () {
         expect($response->json('success'))->toBeTrue();
         expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
         expect($response->json('results')[0])->toMatchArray([
-            "name" => "Arena 1",
-            "street" => "Rua lagoa",
-            "number" => "44",
-            "neighborhood" => "Bairro",
-            "city" => "Vitoria",
-            "state" => "PE",
-            "zip_code" => "55606900",
+            "name" => $this->arenaData['name'],
+            "street" => $this->arenaData['street'],
+            "number" => $this->arenaData['number'],
+            "neighborhood" => $this->arenaData['neighborhood'],
+            "city" => $this->arenaData['city'],
+            "state" => $this->arenaData['state'],
+            "zip_code" => $this->arenaData['zip_code'],
             "admin_id" => $admin->id
         ]);
 
@@ -80,17 +83,20 @@ describe('store an arena', function () {
         expect($response->json('success'))->toBeTrue();
         expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
         expect($response->json('results')[0])->toMatchArray([
-            "name" => "Arena 1",
-            "street" => "Rua lagoa",
-            "number" => "44",
-            "neighborhood" => "Bairro",
-            "city" => "Vitoria",
-            "state" => "PE",
-            "zip_code" => "55606900",
+            "name" => $this->arenaData['name'],
+            "street" => $this->arenaData['street'],
+            "number" => $this->arenaData['number'],
+            "neighborhood" => $this->arenaData['neighborhood'],
+            "city" => $this->arenaData['city'],
+            "state" => $this->arenaData['state'],
+            "zip_code" => $this->arenaData['zip_code'],
             "admin_id" => $this->adminUser->id
         ]);
         
-        expect(Arena::where('name', 'Arena 1')->where('admin_id', $this->adminUser->id)->exists())->toBeTrue();
+        expect(Arena::where('name', $this->arenaData['name'])
+            ->where('admin_id', $this->adminUser->id)
+            ->exists()
+        )->toBeTrue();
     });
 
     test('try to store an arena without logged in', function() {
