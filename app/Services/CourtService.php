@@ -3,10 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\CourtNotFoundException;
-use App\Exceptions\AdminNotFoundException;
-use App\Exceptions\ArenaNotFoundException;
 use App\Models\Admin;
-use App\Models\Arena;
 use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

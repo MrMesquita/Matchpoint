@@ -21,7 +21,7 @@ class Court extends Model
         return $this->belongsTo(Arena::class);
     }
 
-    public function courtTimelables()
+    public function timetables()
     {
         return $this->hasMany(CourtTimetable::class);
     }
