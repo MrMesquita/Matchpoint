@@ -33,9 +33,9 @@ class CourtTimetableController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $courtId, string $timetableId)
+    public function destroy(string $court, string $timetable)
     {
-        $this->courtTimetableService->deleteTimetable($timetableId);
+        $this->courtTimetableService->deleteTimetable($timetable);
         return success_response(null, null, Response::HTTP_NO_CONTENT);
     }
 }

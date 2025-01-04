@@ -6,6 +6,7 @@ use App\Enums\CourtTimetableStatus;
 use App\Exceptions\CourtTimetableNotFoundException;
 use App\Models\CourtTimetable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -38,6 +39,7 @@ class CourtTimetableService
     public function deleteTimetable(string $timetableId): void
     {
         $timetable = $this->findTimetableOrFail($timetableId);
+        $this->authorizeCourtTimetableAccess($timetable);
         $timetable->delete();
     }
 
@@ -59,10 +61,11 @@ class CourtTimetableService
             }
         });
 
+        $validatedCourt = $this->courtService->getCourtById($courtId);
         $validator->validate();
 
         return [
-            'court_id' => $courtId,
+            'court_id' => $validatedCourt->id,
             'date' => $request->input('date'),
             'start_time' => $request->input('start_time'),
             'end_time' => $request->input('end_time'),
@@ -88,6 +91,16 @@ class CourtTimetableService
             throw ValidationException::withMessages([
                 'start_time' => 'The time entered conflicts with an already scheduled time.',
             ]);
+        }
+    }
+
+    protected function authorizeCourtTimetableAccess(CourtTimetable $courtTimetable): void
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        if ($user->isAdmin() && $courtTimetable->court->arena->admin_id !== $user->id) {
+            throw new CourtTimetableNotFoundException();
         }
     }
 }

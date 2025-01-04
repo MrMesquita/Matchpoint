@@ -35,10 +35,15 @@ class CourtTimetable extends Model
         return EnumsCourtTimetableStatus::from($value); 
     }
 
-    public function setStatusAttribute(EnumsCourtTimetableStatus $status)
+    public function setStatusAttribute($status)
     {
+        if (is_string($status)) {
+            $status = EnumsCourtTimetableStatus::from($status);
+        }
+    
         $this->attributes['status'] = $status->value;
     }
+    
 
     public function existsConflictingTimetable($courtId, $date, $endTime, $startTime)
     {
