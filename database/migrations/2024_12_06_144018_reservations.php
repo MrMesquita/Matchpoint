@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->foreignId('court_id')->constrained('courts');
-            $table->foreignId('court_timetable_id')->constrained('court_timelables');
+            $table->foreignId('court_timetable_id')->constrained('court_timetables');
             $table->enum('status', ['CANCELED', 'CONFIRMED', 'PENDING'])->default('PENDING');
             $table->timestamps();
             $table->softDeletes();

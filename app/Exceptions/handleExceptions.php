@@ -37,6 +37,8 @@ function handleExceptions(Exceptions $exceptions)
         return error_response($e->getMessage(), null, $e->getCode());
     })->renderable(function (CourtNotFoundException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
+    })->renderable(function (CourtTimetableNotFoundException $e) {
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (Exception $e) {
         return error_response($e, null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });

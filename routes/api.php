@@ -4,9 +4,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArenaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourtController;
+use App\Http\Controllers\CourtTimetableController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Middleware\AuthSystemMiddleware;
 use App\Http\Middleware\AuthSystemOrAdminMiddleware;
+use App\Models\CourtTimetable;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/status', fn() => json_response(['status' => "It's running"]));
@@ -40,7 +42,16 @@ Route::middleware(['auth:sanctum'])->group(function() {
         Route::middleware(AuthSystemOrAdminMiddleware::class)->group(function () {
             Route::post('', [CourtController::class, 'store'])->name('courts.store');
             Route::put('/{court}', [CourtController::class, 'update'])->name('courts.update');
-            Route::delete('/{court}', [CourtController::class, 'destroy'])->name('courts.destroy');
+            Route::delete('/{court}', [CourtController::class, 'destroy'])->name('courts.destroy');            
+        });
+
+        Route::prefix('/{court}/timetables')->group(function() {
+            Route::get('', [CourtTimetableController::class, 'index'])->name('timetables.index');
+            
+            Route::middleware(AuthSystemOrAdminMiddleware::class)->group(function () {
+                Route::post('', [CourtTimetableController::class, 'store'])->name('timetables.store');
+                Route::delete('/{timetable}', [CourtTimetableController::class, 'destroy'])->name('timetables.destroy');
+            });
         });
     });
 });
