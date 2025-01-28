@@ -22,7 +22,7 @@ class CourtTimetableFactory extends Factory
         $endTime = $this->faker->time('H:i', strtotime('+2 hours', strtotime($startTime)));
 
         return [
-            "date" => $this->faker->date('Y-m-d'),
+            "day_of_week" => $this->faker->numberBetween(0, 6),
             "start_time" => $startTime,
             "end_time" => $endTime,
             "status" => CourtTimetableStatus::AVAILABLE,
