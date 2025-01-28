@@ -18,7 +18,7 @@ beforeEach(function () {
     $this->courtTimetable = new CourtTimetable();
 
     $this->timetableData = [
-        "date" => "2025-01-02",
+        "day_of_week" => "1",
         "start_time" => "05:00",
         "end_time" => "06:00",
         "status" => "available"
@@ -41,7 +41,7 @@ describe('store a court timetable', function () {
         
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeTrue();
@@ -62,7 +62,7 @@ describe('store a court timetable', function () {
         
         expect($this->courtTimetable->existsConflictingTimetable(
             $newCourt->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeFalse();
@@ -83,7 +83,7 @@ describe('store a court timetable', function () {
 
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeTrue();
@@ -102,7 +102,7 @@ describe('store a court timetable', function () {
 
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeFalse();
@@ -124,7 +124,7 @@ describe('store a court timetable', function () {
 
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeFalse();
@@ -144,7 +144,7 @@ describe('store a court timetable', function () {
 
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeFalse();
@@ -185,7 +185,7 @@ describe('store a court timetable', function () {
 
         expect($this->courtTimetable->existsConflictingTimetable(
             $this->court->id,
-            $this->timetableData['date'],
+            $this->timetableData['day_of_week'],
             $this->timetableData['end_time'],
             $this->timetableData['start_time']
         ))->toBeTrue();
