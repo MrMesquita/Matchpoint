@@ -2,17 +2,15 @@
 
 use App\Enums\CourtTimetableStatus;
 use App\Enums\ReservationStatus;
+use App\Http\Controllers\ReservationController;
 use App\Models\Admin;
-use App\Models\Arena;
 use App\Models\Court;
 use App\Models\CourtTimetable;
 use App\Models\Customer;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Services\ReservationService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
+use GuzzleHttp\Promise\Create;
 
 beforeEach(function () {
     $this->systemUser = User::where('email', env('SYSTEM_EMAIL'))->first();
@@ -36,8 +34,7 @@ describe("store reservations", function () {
 
         checkCreatedCase($response);
         expect($response->json('results')[0])->toMatchArray($this->reservationData);
-        expect(
-            Reservation::where('customer_id', $this->reservationData['customer_id'])
+        expect(Reservation::where('customer_id', $this->reservationData['customer_id'])
                 ->where('court_id', $this->reservationData['court_id'])
                 ->where('court_timetable_id', $this->reservationData['court_timetable_id'])->exists()
         )->toBeTrue();
@@ -52,11 +49,18 @@ describe("store reservations", function () {
     });
 
     test("customer tries to book busy time", function () {
-        $reservation = Reservation::factory()->create($this->reservationData);
-        $reservation->update(['status' => ReservationStatus::CONFIRMED]);
-        $reservation->courtTimetable->update(['status' => CourtTimetableStatus::BUSY]);
+        $reservation = Reservation::factory()->create();
+        $customer = Customer::factory()->create();
 
-        $response = $this->actingAs($this->customerUser)->postJson(route("reservations.store"), $this->reservationData);
+        $reservation->status = ReservationStatus::CONFIRMED;
+        $reservation->courtTimetable->status = CourtTimetableStatus::BUSY;
+        $reservation->save();
+
+        $response = $this->actingAs($customer)->postJson(
+            route("reservations.store"), 
+            $this->reservationData
+        );
+
         checkValidationErrorCase($response);
     });
 

@@ -6,9 +6,6 @@ use App\Models\Court;
 use App\Models\Customer;
 use App\Models\Reservation;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class); 
 
 beforeEach(function() {
     $this->systemUser = User::where('email', env('SYSTEM_EMAIL'))->first();
