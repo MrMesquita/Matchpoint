@@ -4,6 +4,9 @@ use App\Models\Admin;
 use App\Models\Arena;
 use App\Models\Court;
 use App\Models\CourtTimetable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function() {
     $this->adminUser = Admin::factory()->create();
@@ -23,7 +26,7 @@ describe('fetch court timetables', function() {
 
         expect($response->json('results'))
         ->each()
-        ->toHaveKeys(['id','court_id','day_of_week','start_time','end_time','status']);
+        ->toHaveKeys(['id','court_id','date','start_time','end_time','status']);
     });
 
     test('try to get timetables without logged in', function() {

@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Admin;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+
+uses(RefreshDatabase::class);
 
 describe("auth logout admin", function() {
     test("connected admin tries to log out", function() {

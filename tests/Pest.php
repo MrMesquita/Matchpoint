@@ -41,52 +41,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function checkSuccessCase($response, $count = null) {
-    expect($response->status())->toBe(200);
-    expect($response->json())->toHaveKeys(['success', 'results']);
-    expect($response->json('success'))->toBeTrue();
-
-    if ($count) {
-        expect($response->json('results'))->toHaveCount($count);
-    }
-}
-
-function checkCreatedCase($response) {
-    expect($response->getStatusCode())->toBe(201);
-    expect($response->json())->toHaveKeys(['success', 'results']);
-    expect($response->json('success'))->toBeTrue();
-    expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
-}
-
-function checkValidationErrorCase($response) {
-    expect($response->status())->toBe(400);
-    expect($response->json())->toHaveKeys(['success', 'message', 'errors']);
-    expect($response->json('success'))->toBeFalse();
-    expect($response->json('message'))->toBeString();
-}
-
-function checkNotFoundCase($response) {
-    expect($response->status())->toBe(404);
-    expect($response->json())->toHaveKeys(['success', 'message']);
-    expect($response->json('success'))->toBeFalse();
-    expect($response->json('message'))->toBeString();
-}
-
-function checkReservationsResults($reservations) {
-    foreach ($reservations as $reservation) {
-        expect($reservation)->toHaveKeys([
-            'id',
-            'customer_id', 
-            'court_id', 
-            'court_timetable_id', 
-            'status', 
-            'customer', 
-            'court', 
-            'court_timetable'
-        ]);
-
-        expect($reservation['customer'])->toHaveKeys(['id', 'name', 'surname', 'email']);
-        expect($reservation['court'])->toHaveKeys(['id', 'name', 'capacity', 'arena_id']);
-        expect($reservation['court_timetable'])->toHaveKeys(['id', 'day_of_week', 'start_time', 'end_time', 'status']);
-    }
+function something()
+{
+    // ..
 }

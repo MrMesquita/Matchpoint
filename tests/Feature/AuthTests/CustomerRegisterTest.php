@@ -1,5 +1,11 @@
 <?php
 
+use App\Models\Customer;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+
+uses(RefreshDatabase::class);
+
 describe("Auth register", function() {
     test("Customer tries to register", function() {
         $registerData = [

@@ -39,10 +39,6 @@ function handleExceptions(Exceptions $exceptions)
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (CourtTimetableNotFoundException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
-    })->renderable(function (ReservationNotFoundException $e) {
-        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
-    })->renderable(function (ReservationCanceledException $e) {
-        return error_response($e->getMessage(), null, Response::HTTP_CONFLICT);
     })->renderable(function (Exception $e) {
         return error_response($e, null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });

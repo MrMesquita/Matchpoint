@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Customer;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->customer = Customer::create([

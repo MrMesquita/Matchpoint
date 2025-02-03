@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('court_timetables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('court_id')->constrained('courts')->onDelete('cascade');
-            $table->integer('day_of_week');
+            $table->date('date');
             $table->char('start_time', 5);
             $table->char('end_time', 5);
             $table->enum('status', ['available', 'busy'])->default('available');
