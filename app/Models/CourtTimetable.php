@@ -14,7 +14,7 @@ class CourtTimetable extends Model
 
     protected $fillable = [
         'court_id',
-        'day_of_week',
+        'date',
         'start_time',
         'end_time',
         'status'
@@ -43,11 +43,12 @@ class CourtTimetable extends Model
     
         $this->attributes['status'] = $status->value;
     }
+    
 
     public function existsConflictingTimetable($courtId, $date, $endTime, $startTime)
     {
-        return $this::where('court_id', $courtId)
-        ->where('day_of_week', $date)
+        return  $this::where('court_id', $courtId)
+        ->where('date', $date)
         ->where(function ($query) use ($startTime, $endTime) {
             $query->where(function ($query) use ($startTime, $endTime) {
                 $query->where('start_time', '<', $endTime)
@@ -55,4 +56,5 @@ class CourtTimetable extends Model
             });
         })->exists();   
     }
+
 }

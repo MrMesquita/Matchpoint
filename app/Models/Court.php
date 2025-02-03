@@ -30,9 +30,4 @@ class Court extends Model
     {
         return $this->hasMany(Reservation::class);
     }
-
-    public function getAdminOwner()
-    {
-        return $this->arena->admin ?? null;
-    }
 }

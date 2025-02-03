@@ -5,6 +5,9 @@ use App\Models\Admin;
 use App\Models\Arena;
 use App\Models\Court;
 use App\Models\CourtTimetable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->courtTimetableModel = new CourtTimetable();

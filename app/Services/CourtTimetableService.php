@@ -23,19 +23,12 @@ class CourtTimetableService
         return $court->timetables->all();
     }
 
-    public function getCourtTimetableById(string $timetableId): CourtTimetable
-    {
-        $courtTimetable = $this->findTimetableOrFail($timetableId);
-        $this->authorizeCourtTimetableAccess($courtTimetable);
-        return $courtTimetable;
-    }
-
     public function save(Request $request, string $courtId): CourtTimetable
     {
         $validated = $this->validateTimetableData($request, $courtId);
         $this->checkConflictingTimetable(
             $courtId,
-            $validated['day_of_week'],
+            $validated['date'],
             $validated['end_time'],
             $validated['start_time']
         );
@@ -53,7 +46,7 @@ class CourtTimetableService
     protected function validateTimetableData(Request $request, string $courtId): array
     {
         $validator = Validator::make($request->all(), [
-            'day_of_week' => 'required|integer',
+            'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i',
             'status' => 'required|in:available,busy',
@@ -73,7 +66,7 @@ class CourtTimetableService
 
         return [
             'court_id' => $validatedCourt->id,
-            'day_of_week' => $request->input('day_of_week'),
+            'date' => $request->input('date'),
             'start_time' => $request->input('start_time'),
             'end_time' => $request->input('end_time'),
             'status' => CourtTimetableStatus::from($request->input('status')),
@@ -90,9 +83,9 @@ class CourtTimetableService
         return $timetable;
     }
 
-    public function checkConflictingTimetable($courtId, $dayOfWeek, $endTime, $startTime)
+    public function checkConflictingTimetable($courtId, $date, $endTime, $startTime)
     {
-        $conflictingTimetable = $this->courtTimetable->existsConflictingTimetable($courtId, $dayOfWeek, $endTime, $startTime);
+        $conflictingTimetable = $this->courtTimetable->existsConflictingTimetable($courtId, $date, $endTime, $startTime);
 
         if ($conflictingTimetable) {
             throw ValidationException::withMessages([

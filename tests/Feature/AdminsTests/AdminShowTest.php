@@ -2,6 +2,9 @@
 
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function() {
     $this->systemUser = User::where('email', env('SYSTEM_EMAIL'))->first();
