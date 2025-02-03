@@ -1,10 +1,7 @@
 <?php
 
 use App\Models\Customer;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-
-uses(RefreshDatabase::class);
 
 describe("auth logout customer", function() {
     test("connected customer tries to log out", function() {

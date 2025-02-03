@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
-
 describe("auth attemps system", function() {
     test('system can log in', function() {
         $loginData = [

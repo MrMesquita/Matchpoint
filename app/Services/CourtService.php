@@ -11,14 +11,11 @@ use Illuminate\Validation\Rule;
 
 class CourtService
 {
-    private ArenaService $arenaService;
-    private AdminService $adminService;
+    public function __construct(
+        private ArenaService $arenaService,
+        private AdminService $adminService
+    ){ }
 
-    public function __construct(ArenaService $arenaService, AdminService $adminService)
-    {
-        $this->arenaService = $arenaService;
-        $this->adminService = $adminService;
-    }
     public function getAllCourts()
     {
         /** @var \App\Models\User $user */

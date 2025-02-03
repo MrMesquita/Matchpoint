@@ -5,9 +5,6 @@ use App\Models\Admin;
 use App\Models\Arena;
 use App\Models\Court;
 use App\Models\Customer;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->adminUser = Admin::factory()->create()->first();
