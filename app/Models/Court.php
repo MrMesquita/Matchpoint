@@ -21,7 +21,7 @@ class Court extends Model
         return $this->belongsTo(Arena::class);
     }
 
-    public function courtTimelables()
+    public function timetables()
     {
         return $this->hasMany(CourtTimetable::class);
     }
@@ -29,5 +29,10 @@ class Court extends Model
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function getAdminOwner()
+    {
+        return $this->arena->admin ?? null;
     }
 }

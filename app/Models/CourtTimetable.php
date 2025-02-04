@@ -10,9 +10,11 @@ class CourtTimetable extends Model
 {
     use HasFactory;
 
+    protected $table = "court_timetables";
+
     protected $fillable = [
         'court_id',
-        'date',
+        'day_of_week',
         'start_time',
         'end_time',
         'status'
@@ -33,8 +35,24 @@ class CourtTimetable extends Model
         return EnumsCourtTimetableStatus::from($value); 
     }
 
-    public function setStatusAttribute(EnumsCourtTimetableStatus $status)
+    public function setStatusAttribute($status)
     {
+        if (is_string($status)) {
+            $status = EnumsCourtTimetableStatus::from($status);
+        }
+    
         $this->attributes['status'] = $status->value;
+    }
+
+    public function existsConflictingTimetable($courtId, $date, $endTime, $startTime)
+    {
+        return $this::where('court_id', $courtId)
+        ->where('day_of_week', $date)
+        ->where(function ($query) use ($startTime, $endTime) {
+            $query->where(function ($query) use ($startTime, $endTime) {
+                $query->where('start_time', '<', $endTime)
+                      ->where('end_time', '>', $startTime);
+            });
+        })->exists();   
     }
 }

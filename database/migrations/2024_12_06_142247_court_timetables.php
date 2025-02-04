@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('court_timelables', function (Blueprint $table) {
+        Schema::create('court_timetables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('court_id')->constrained('courts')->onDelete('cascade');
-            $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->enum('status', ['AVAILABLE', 'BUSY'])->default('AVAILABLE');
+            $table->integer('day_of_week');
+            $table->char('start_time', 5);
+            $table->char('end_time', 5);
+            $table->enum('status', ['available', 'busy'])->default('available');
             $table->timestamps();
         });        
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('court_timelables');
+        Schema::dropIfExists('court_timetables');
     }
 };

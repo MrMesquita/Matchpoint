@@ -3,10 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\CourtNotFoundException;
-use App\Exceptions\AdminNotFoundException;
-use App\Exceptions\ArenaNotFoundException;
 use App\Models\Admin;
-use App\Models\Arena;
 use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,14 +11,11 @@ use Illuminate\Validation\Rule;
 
 class CourtService
 {
-    private ArenaService $arenaService;
-    private AdminService $adminService;
+    public function __construct(
+        private ArenaService $arenaService,
+        private AdminService $adminService
+    ){ }
 
-    public function __construct(ArenaService $arenaService, AdminService $adminService)
-    {
-        $this->arenaService = $arenaService;
-        $this->adminService = $adminService;
-    }
     public function getAllCourts()
     {
         /** @var \App\Models\User $user */
