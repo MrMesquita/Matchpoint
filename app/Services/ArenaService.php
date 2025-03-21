@@ -95,7 +95,7 @@ class ArenaService
 
     private function findArenaOrFail(string $id): Arena
     {
-        $arena = Arena::with(['admin', 'courts'])->find($id);
+        $arena = Arena::find($id);
 
         if (!$arena) {
             throw new ArenaNotFoundException();
