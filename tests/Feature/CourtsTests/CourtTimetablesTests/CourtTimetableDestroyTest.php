@@ -25,7 +25,7 @@ describe('destroy a court timetable', function () {
                     'timetable' => $this->courtTimetable->id
                 ])
             );
-    
+
         expect($response->getStatusCode())->toBe(204);
         expect(CourtTimetable::where('id', $this->courtTimetable->id)->exists())->toBeFalse();
     });
@@ -40,8 +40,8 @@ describe('destroy a court timetable', function () {
                 ])
             );
 
-        expect($response->getStatusCode())->toBe(204);
-        expect(CourtTimetable::where('id', $newCourtTimetable->id)->exists())->toBeFalse();
+        expect($response->getStatusCode())->toBe(204)
+            ->and(CourtTimetable::where('id', $newCourtTimetable->id)->exists())->toBeFalse();
     });
 
     test('try to destroy a court timetable without logged in', function() {

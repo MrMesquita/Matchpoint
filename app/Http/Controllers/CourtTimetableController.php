@@ -114,7 +114,7 @@ class CourtTimetableController
             )
         ]
     )]
-    public function destroy(string $timetable): JsonResponse
+    public function destroy(string $court, string $timetable): JsonResponse
     {
         $this->courtTimetableService->deleteTimetable($timetable);
         return success_response(null, null, Response::HTTP_NO_CONTENT);
