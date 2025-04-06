@@ -5,25 +5,32 @@ namespace App\Services;
 use App\Exceptions\CourtNotFoundException;
 use App\Models\Admin;
 use App\Models\Court;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class CourtService
 {
+    private ArenaService $arenaService;
+    private AdminService $adminService;
+
     public function __construct(
-        private ArenaService $arenaService,
-        private AdminService $adminService
-    ){ }
+        ArenaService $arenaService,
+        AdminService $adminService
+    ){
+        $this->adminService = $adminService;
+        $this->arenaService = $arenaService;
+    }
 
     public function getAllCourts()
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         if ($user->isAdmin()) {
             return $this->getAdminCourts($user);
         }
-        
+
         return Court::all();
     }
 
@@ -45,7 +52,7 @@ class CourtService
         $court = $this->findCourtOrFail($id);
         $this->authorizeCourtAccess($court);
         $data = $this->validateCourtData($request);
-        
+
         $court->update($data);
         return $court;
     }
@@ -70,7 +77,7 @@ class CourtService
             'arena_id' => 'required'
         ]);
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         $arenaSent = $this->arenaService->getArenaById($validated['arena_id']);
 
@@ -93,9 +100,9 @@ class CourtService
 
     protected function authorizeCourtAccess(Court $court): void
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
-        
+
         if ($user->isAdmin() && $court->arena->admin_id !== $user->id) {
             throw new CourtNotFoundException();
         }
