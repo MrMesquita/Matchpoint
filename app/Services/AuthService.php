@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +16,7 @@ class AuthService
         $this->customerService = $customerService;
     }
 
-    public function attemptLogin(array $credentials)
+    public function attemptLogin(array $credentials): string
     {
         $this->validateCredentials($credentials);
         if (!Auth::attempt($credentials)) {
@@ -24,7 +25,7 @@ class AuthService
             ]);
         }
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         return $user->createToken($user->name, ['*'], now()->addDays(3))->plainTextToken;
     }
@@ -46,7 +47,7 @@ class AuthService
     {
         $customer = $this->customerService->createCustomer($request);
         $password = $request->input('password');
-    
+
         return $this->attemptLogin([
             'email' => $customer->email,
             'password' => $password,

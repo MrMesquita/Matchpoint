@@ -14,7 +14,7 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
-function handleExceptions(Exceptions $exceptions)
+function handleExceptions(Exceptions $exceptions): Exceptions
 {
     return $exceptions->renderable(function (NotFoundHttpException $e) {
         return error_response('The requested URL does not match any valid resource.', null, Response::HTTP_NOT_FOUND);

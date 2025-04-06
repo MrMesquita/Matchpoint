@@ -31,53 +31,7 @@
                                         "results": {
                                             "type": "array",
                                             "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Admin"
-                                                    },
-                                                    "surname": {
-                                                        "type": "string",
-                                                        "example": "test"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "1234568900"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "admin@admin.com"
-                                                    },
-                                                    "email_verified_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "type": {
-                                                        "type": "string",
-                                                        "example": "admin"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    }
-                                                },
-                                                "type": "object"
+                                                "$ref": "#/components/schemas/AdminResource"
                                             }
                                         }
                                     },
@@ -127,33 +81,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name",
-                                    "surname",
-                                    "phone",
-                                    "email",
-                                    "password"
-                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "New"
-                                    },
-                                    "surname": {
-                                        "type": "string",
-                                        "example": "Admin"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "12345678900"
+                                        "example": "Maria das Graças"
                                     },
                                     "email": {
                                         "type": "string",
-                                        "example": "newadmin@example.com"
+                                        "format": "email",
+                                        "example": "maria@example.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "123456"
+                                        "format": "password",
+                                        "example": "securePass123"
                                     }
                                 },
                                 "type": "object"
@@ -167,55 +108,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 7
-                                                    },
-                                                    "type": {
-                                                        "type": "string",
-                                                        "example": "admin"
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Marcelo"
-                                                    },
-                                                    "surname": {
-                                                        "type": "string",
-                                                        "example": "Mesquita"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "7677"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "767788@admin.com"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-02-04T23:28:32.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-02-04T23:28:32.000000Z"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/AdminResource"
                                 }
                             }
                         }
@@ -225,59 +118,17 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The phone has already been taken. (and 1 more error)"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "phone": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "The phone has already been taken."
-                                                    }
-                                                },
-                                                "email": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "The email field is required."
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ValidationError"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Tries access without system login",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthenticated."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -301,7 +152,6 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Admin ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -314,55 +164,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 7
-                                                    },
-                                                    "type": {
-                                                        "type": "string",
-                                                        "example": "admin"
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Marcelo"
-                                                    },
-                                                    "surname": {
-                                                        "type": "string",
-                                                        "example": "Mesquita"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "7677"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "767788@admin.com"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-02-04T23:28:32.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-02-04T23:28:32.000000Z"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/AdminResource"
                                 }
                             }
                         }
@@ -372,43 +174,17 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Administrator not found."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/NotFound"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Tries access without system login",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthenticated."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -430,7 +206,6 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Admin ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -445,19 +220,17 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "New"
-                                    },
-                                    "surname": {
-                                        "type": "string",
-                                        "example": "Admin"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "12345678900"
+                                        "example": "Maria das Graças"
                                     },
                                     "email": {
                                         "type": "string",
-                                        "example": "newadmin@example.com"
+                                        "format": "email",
+                                        "example": "maria@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "securePass123"
                                     }
                                 },
                                 "type": "object"
@@ -471,88 +244,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "34343"
-                                                    },
-                                                    "surname": {
-                                                        "type": "string",
-                                                        "example": "Mesquita"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "353535"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "admin@admin.com"
-                                                    },
-                                                    "email_verified_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "type": {
-                                                        "type": "string",
-                                                        "example": "admin"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-02-05T00:29:28.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Tries access without system login",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthenticated."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/AdminResource"
                                 }
                             }
                         }
@@ -562,36 +254,17 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The phone has already been taken. (and 1 more error)"
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "phone": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "The phone has already been taken."
-                                                    }
-                                                },
-                                                "email": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "The email field is required."
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -601,20 +274,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Administrator not found."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/NotFound"
                                 }
                             }
                         }
@@ -636,7 +296,6 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Admin ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -652,17 +311,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated."
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -696,149 +345,7 @@
                                         "results": {
                                             "type": "array",
                                             "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "admin_id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Arena 1"
-                                                    },
-                                                    "street": {
-                                                        "type": "string",
-                                                        "example": "Rua lagoa"
-                                                    },
-                                                    "number": {
-                                                        "type": "integer",
-                                                        "example": 44
-                                                    },
-                                                    "neighborhood": {
-                                                        "type": "string",
-                                                        "example": "Bairro"
-                                                    },
-                                                    "city": {
-                                                        "type": "string",
-                                                        "example": "Vitoria"
-                                                    },
-                                                    "state": {
-                                                        "type": "string",
-                                                        "example": "PE"
-                                                    },
-                                                    "zip_code": {
-                                                        "type": "string",
-                                                        "example": "5569955"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "admin": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 2
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "34343"
-                                                            },
-                                                            "surname": {
-                                                                "type": "string",
-                                                                "example": "Mesquita"
-                                                            },
-                                                            "phone": {
-                                                                "type": "string",
-                                                                "example": "353535"
-                                                            },
-                                                            "email": {
-                                                                "type": "string",
-                                                                "example": "admin@admin.com"
-                                                            },
-                                                            "email_verified_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            },
-                                                            "type": {
-                                                                "type": "string",
-                                                                "example": "admin"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-01-02T18:46:22.000000Z"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-02-07T17:20:21.000000Z"
-                                                            },
-                                                            "deleted_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            }
-                                                        },
-                                                        "type": "object",
-                                                        "nullable": true
-                                                    },
-                                                    "courts": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "Quadra 3"
-                                                                },
-                                                                "capacity": {
-                                                                    "type": "integer",
-                                                                    "example": 10
-                                                                },
-                                                                "arena_id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "created_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "updated_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "deleted_at": {
-                                                                    "type": "string",
-                                                                    "example": null,
-                                                                    "nullable": true
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
+                                                "$ref": "#/components/schemas/ArenaResource"
                                             }
                                         }
                                     },
@@ -848,24 +355,65 @@
                         }
                     },
                     "401": {
-                        "description": "Tries to access without system login",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthenticated."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Arenas"
+                ],
+                "summary": "Create a new arena",
+                "operationId": "f59fa2224c0ee3876ec9c3f7c975fa2a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArenaRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Arena created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArenaResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -883,7 +431,7 @@
                 "tags": [
                     "Arenas"
                 ],
-                "summary": "find arena by id",
+                "summary": "Find arena by id",
                 "operationId": "589bee796c7c10ad16768ef129790b75",
                 "parameters": [
                     {
@@ -911,149 +459,7 @@
                                         "results": {
                                             "type": "array",
                                             "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "admin_id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Arena 1"
-                                                    },
-                                                    "street": {
-                                                        "type": "string",
-                                                        "example": "Rua lagoa"
-                                                    },
-                                                    "number": {
-                                                        "type": "integer",
-                                                        "example": 44
-                                                    },
-                                                    "neighborhood": {
-                                                        "type": "string",
-                                                        "example": "Bairro"
-                                                    },
-                                                    "city": {
-                                                        "type": "string",
-                                                        "example": "Vitoria"
-                                                    },
-                                                    "state": {
-                                                        "type": "string",
-                                                        "example": "PE"
-                                                    },
-                                                    "zip_code": {
-                                                        "type": "string",
-                                                        "example": "5569955"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "admin": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 2
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "34343"
-                                                            },
-                                                            "surname": {
-                                                                "type": "string",
-                                                                "example": "Mesquita"
-                                                            },
-                                                            "phone": {
-                                                                "type": "string",
-                                                                "example": "353535"
-                                                            },
-                                                            "email": {
-                                                                "type": "string",
-                                                                "example": "admin@admin.com"
-                                                            },
-                                                            "email_verified_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            },
-                                                            "type": {
-                                                                "type": "string",
-                                                                "example": "admin"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-01-02T18:46:22.000000Z"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-02-07T17:20:21.000000Z"
-                                                            },
-                                                            "deleted_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            }
-                                                        },
-                                                        "type": "object",
-                                                        "nullable": true
-                                                    },
-                                                    "courts": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "Quadra 3"
-                                                                },
-                                                                "capacity": {
-                                                                    "type": "integer",
-                                                                    "example": 10
-                                                                },
-                                                                "arena_id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "created_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "updated_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "deleted_at": {
-                                                                    "type": "string",
-                                                                    "example": null,
-                                                                    "nullable": true
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
+                                                "$ref": "#/components/schemas/ArenaResource"
                                             }
                                         }
                                     },
@@ -1063,47 +469,21 @@
                         }
                     },
                     "404": {
-                        "description": "Arena not found",
+                        "description": "Admin not found",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Arena not found."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/NotFound"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Tries to access without system login",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "success": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthenticated."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -1138,206 +518,38 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Arena X"
-                                    },
-                                    "street": {
-                                        "type": "string",
-                                        "example": "Rua A"
-                                    },
-                                    "number": {
-                                        "type": "string",
-                                        "example": "123"
-                                    },
-                                    "neighborhood": {
-                                        "type": "string",
-                                        "example": "Centro"
-                                    },
-                                    "city": {
-                                        "type": "string",
-                                        "example": "São Paulo"
-                                    },
-                                    "state": {
-                                        "type": "string",
-                                        "example": "SP"
-                                    },
-                                    "zip_code": {
-                                        "type": "string",
-                                        "example": "12345-678"
-                                    },
-                                    "admin_id": {
-                                        "type": "integer",
-                                        "example": 2
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/ArenaRequest"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Arena updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "results": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "admin_id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Arena 1"
-                                                    },
-                                                    "street": {
-                                                        "type": "string",
-                                                        "example": "Rua lagoa"
-                                                    },
-                                                    "number": {
-                                                        "type": "integer",
-                                                        "example": 44
-                                                    },
-                                                    "neighborhood": {
-                                                        "type": "string",
-                                                        "example": "Bairro"
-                                                    },
-                                                    "city": {
-                                                        "type": "string",
-                                                        "example": "Vitoria"
-                                                    },
-                                                    "state": {
-                                                        "type": "string",
-                                                        "example": "PE"
-                                                    },
-                                                    "zip_code": {
-                                                        "type": "string",
-                                                        "example": "5569955"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:22.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "admin": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 2
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "34343"
-                                                            },
-                                                            "surname": {
-                                                                "type": "string",
-                                                                "example": "Mesquita"
-                                                            },
-                                                            "phone": {
-                                                                "type": "string",
-                                                                "example": "353535"
-                                                            },
-                                                            "email": {
-                                                                "type": "string",
-                                                                "example": "admin@admin.com"
-                                                            },
-                                                            "email_verified_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            },
-                                                            "type": {
-                                                                "type": "string",
-                                                                "example": "admin"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-01-02T18:46:22.000000Z"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-02-07T17:20:21.000000Z"
-                                                            },
-                                                            "deleted_at": {
-                                                                "type": "string",
-                                                                "example": null,
-                                                                "nullable": true
-                                                            }
-                                                        },
-                                                        "type": "object",
-                                                        "nullable": true
-                                                    },
-                                                    "courts": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "Quadra 3"
-                                                                },
-                                                                "capacity": {
-                                                                    "type": "integer",
-                                                                    "example": 10
-                                                                },
-                                                                "arena_id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "created_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "updated_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-02T18:46:45.000000Z"
-                                                                },
-                                                                "deleted_at": {
-                                                                    "type": "string",
-                                                                    "example": null,
-                                                                    "nullable": true
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/ArenaResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -1355,26 +567,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Arena not found."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized access (unauthenticated)",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -1509,82 +701,7 @@
                                         "results": {
                                             "type": "array",
                                             "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Quadra 3"
-                                                    },
-                                                    "capacity": {
-                                                        "type": "integer",
-                                                        "example": 10
-                                                    },
-                                                    "arena_id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:45.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-01-02T18:46:45.000000Z"
-                                                    },
-                                                    "deleted_at": {
-                                                        "type": "string",
-                                                        "example": null,
-                                                        "nullable": true
-                                                    },
-                                                    "timetables": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 12
-                                                                },
-                                                                "court_id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "day_of_week": {
-                                                                    "type": "integer",
-                                                                    "example": 1
-                                                                },
-                                                                "start_time": {
-                                                                    "type": "string",
-                                                                    "example": "15:00"
-                                                                },
-                                                                "end_time": {
-                                                                    "type": "string",
-                                                                    "example": "16:00"
-                                                                },
-                                                                "status": {
-                                                                    "type": "string",
-                                                                    "example": "busy"
-                                                                },
-                                                                "created_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-03T01:48:04.000000Z"
-                                                                },
-                                                                "updated_at": {
-                                                                    "type": "string",
-                                                                    "format": "date-time",
-                                                                    "example": "2025-01-27T16:09:05.000000Z"
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
+                                                "$ref": "#/components/schemas/CourtResource"
                                             }
                                         }
                                     },
@@ -1614,21 +731,11 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized access (unauthenticated)",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated."
-                                        }
-                                    },
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/Unauthorized"
                                 }
                             }
                         }
@@ -1640,9 +747,1313 @@
                     }
                 ]
             }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "description": "Authenticates the user and returns a token",
+                "operationId": "5db09a35f965c6ca7529ed3c3cae8e21",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Logout",
+                "description": "Logs out the user and invalidates the token",
+                "operationId": "8f1a443d39c3bf383f851fbb51253c64",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Registration",
+                "description": "Creates a new user",
+                "operationId": "48e49e48019e8b141753cb515a26100b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registration successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/courts": {
+            "get": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "List all courts",
+                "operationId": "f1c98d2dddce3402738ff6f7a8446c80",
+                "responses": {
+                    "200": {
+                        "description": "Courts retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourtResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Create a new court",
+                "operationId": "e02d346ddbcf89047e1505baa8993578",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CourtRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Court created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "api/v1/courts/{id}": {
+            "get": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Get a specific court",
+                "operationId": "ab4d7aaebb64f08ee59e5fd2bc26cbe3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Court ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Court retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourtResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Court not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Update a court",
+                "operationId": "732bbee4f5b2db95210274a11d0b1a1d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Court ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CourtRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Court updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourtResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Court not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Delete a court",
+                "operationId": "e884d66765d6113f3761910b8981ad17",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Court ID",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Court deleted successfully"
+                    },
+                    "404": {
+                        "description": "Court not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/courts/{courtId}/timetables": {
+            "get": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "List timetables for a specific court",
+                "operationId": "fb73d88d52240fd60d221a24fff0b826",
+                "parameters": [
+                    {
+                        "name": "courtId",
+                        "in": "path",
+                        "description": "ID of the court",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of timetables",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CourtTimetableResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Create a new timetable for a court",
+                "operationId": "118ec22e647e1cd5ba574ad5fd26d61c",
+                "parameters": [
+                    {
+                        "name": "courtId",
+                        "in": "path",
+                        "description": "ID of the court",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "day_of_week",
+                                    "start_time",
+                                    "end_time",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "day_of_week": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "example": "08:00"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "example": "10:00"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "available",
+                                            "busy"
+                                        ],
+                                        "example": "available"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Timetable created successfully"
+                    }
+                }
+            }
+        },
+        "/api/courts/{court}/timetables/{timetable}": {
+            "delete": {
+                "tags": [
+                    "Courts"
+                ],
+                "summary": "Delete a specific timetable",
+                "operationId": "428282b2f42a9a438f611745e63a22b8",
+                "parameters": [
+                    {
+                        "name": "court",
+                        "in": "path",
+                        "description": "ID of the court",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "timetable",
+                        "in": "path",
+                        "description": "ID of the timetable to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Timetable deleted successfully"
+                    }
+                }
+            }
+        },
+        "/api/customers": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "List all customers",
+                "operationId": "2b23ac696cfd81c23807c2c1fd63b0b0",
+                "responses": {
+                    "200": {
+                        "description": "List of customers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomerResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Create a new customer",
+                "operationId": "428d5533c8386f91d2baf4de69f01468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "surname",
+                                    "phone",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+5511999999999"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get a customer by ID",
+                "operationId": "d51ce35bfe185b82c242dd4443ffba54",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update a customer",
+                "operationId": "07a3f33c1373d3c6a97b7d8846d81472",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+5511999999999"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Delete a customer",
+                "operationId": "634844e24d72540f608f7fd297f5d8b0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Customer deleted successfully"
+                    }
+                }
+            }
+        },
+        "/reservations": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "List all reservations",
+                "operationId": "69fb15b9890a0559eb50e5e1777d9b64",
+                "responses": {
+                    "200": {
+                        "description": "List of reservations returned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReservationResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Create a new reservation",
+                "operationId": "1aabc7d432cc652e63cfc3fb514132cd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "court_id",
+                                    "date",
+                                    "start_time",
+                                    "end_time"
+                                ],
+                                "properties": {
+                                    "court_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-04-10"
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "format": "HH:mm:ss",
+                                        "example": "14:00:00"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "format": "HH:mm:ss",
+                                        "example": "15:00:00"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "confirmed",
+                                            "cancelled"
+                                        ],
+                                        "example": "pending"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reservation created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservations/{id}": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Get a reservation by ID",
+                "operationId": "4472ee4ed670cd72b7969d6e32473b92",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Reservation ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservation retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReservationResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Cancel a reservation (admin or customer)",
+                "operationId": "fa964cce3285d6c10989429c544421ca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Reservation ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservation canceled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReservationResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservations/{id}/confirm": {
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Confirm a reservation (admin only)",
+                "operationId": "cc1f2ccf1c96ad7eed5980bac37d7a5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Reservation ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservation confirmed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReservationResource"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Reservation not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
+        "schemas": {
+            "AdminResource": {
+                "required": [
+                    "id",
+                    "name",
+                    "email",
+                    "type",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "f36c8a9c-1f85-4a38-bc92-6e0e9b99d021"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Maria das Graças"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "maria@example.com"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "system"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-01T08:30:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-04-01T08:45:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "ArenaRequest": {
+                "required": [
+                    "name",
+                    "street",
+                    "number",
+                    "neighborhood",
+                    "city",
+                    "state",
+                    "zip_code"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Arena Nova"
+                    },
+                    "street": {
+                        "type": "string",
+                        "example": "Rua da Arena"
+                    },
+                    "number": {
+                        "type": "string",
+                        "example": "123"
+                    },
+                    "neighborhood": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Recife"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "PE"
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "example": "52000-000"
+                    },
+                    "admin_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "ArenaResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Arena Nova"
+                    },
+                    "street": {
+                        "type": "string",
+                        "example": "Rua da Arena"
+                    },
+                    "number": {
+                        "type": "string",
+                        "example": "123"
+                    },
+                    "neighborhood": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Recife"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "PE"
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "example": "52000-000"
+                    },
+                    "admin_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-02T18:46:22.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-02T18:46:22.000000Z"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "CourtRequest": {
+                "required": [
+                    "name",
+                    "type",
+                    "status"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Quadra de Tênis 1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "Tênis"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "available",
+                            "unavailable"
+                        ],
+                        "example": "available"
+                    }
+                },
+                "type": "object"
+            },
+            "CourtResource": {
+                "description": "Quadra esportiva disponível para reservas",
+                "required": [
+                    "id",
+                    "name",
+                    "type",
+                    "status",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Quadra de Tênis 1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "Tênis"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "available"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T11:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "CourtTimetableResource": {
+                "required": [
+                    "id",
+                    "court_id",
+                    "day_of_week",
+                    "start_time",
+                    "end_time"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "court_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "day_of_week": {
+                        "type": "string",
+                        "example": "monday"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "HH:mm:ss",
+                        "example": "08:00:00"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "format": "HH:mm:ss",
+                        "example": "18:00:00"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T10:30:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "CustomerResource": {
+                "required": [
+                    "id",
+                    "name",
+                    "surname",
+                    "phone",
+                    "email"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "fa0d70b5-3a20-4220-a7e4-0d5b479e2739"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+5511999999999"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T11:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "12345678"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginResponse": {
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJ..."
+                    }
+                },
+                "type": "object"
+            },
+            "NotFound": {
+                "description": "Resource not found response",
+                "required": [
+                    "success",
+                    "message"
+                ],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Resource not found"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "12345678"
+                    }
+                },
+                "type": "object"
+            },
+            "ReservationResource": {
+                "required": [
+                    "id",
+                    "court_id",
+                    "user_id",
+                    "date",
+                    "start_time",
+                    "end_time",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 42
+                    },
+                    "court_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-04-10"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "HH:mm:ss",
+                        "example": "14:00:00"
+                    },
+                    "end_time": {
+                        "type": "string",
+                        "format": "HH:mm:ss",
+                        "example": "15:00:00"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "confirmed",
+                            "cancelled"
+                        ],
+                        "example": "confirmed"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T14:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-04-01T15:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Unauthorized": {
+                "description": "Response for unauthorized access attempts",
+                "required": [
+                    "success",
+                    "message"
+                ],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Unauthorized."
+                    }
+                },
+                "type": "object"
+            },
+            "ValidationError": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "The given data was invalid."
+                    },
+                    "errors": {
+                        "type": "object",
+                        "example": {
+                            "email": [
+                                "The email field is required."
+                            ]
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
@@ -1653,12 +2064,22 @@
     },
     "tags": [
         {
-            "name": "Administrators",
-            "description": "Administrators"
+            "name": "Administrators"
         },
         {
-            "name": "Arenas",
-            "description": "Arenas"
+            "name": "Arenas"
+        },
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "Courts"
+        },
+        {
+            "name": "Customers"
+        },
+        {
+            "name": "Reservations"
         }
     ]
 }

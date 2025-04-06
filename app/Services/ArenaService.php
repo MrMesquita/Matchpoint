@@ -6,6 +6,8 @@ use App\Exceptions\AdminNotFoundException;
 use App\Exceptions\ArenaNotFoundException;
 use App\Models\Admin;
 use App\Models\Arena;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,12 +15,12 @@ class ArenaService
 {
     public function getAllArenas()
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         if ($user->isAdmin()) {
             $admin = Admin::find($user->id);
 
-            return $admin ? $admin->arenas->with('courts') : collect();
+            return $admin ? $admin->arenas()->with('courts')->get() : collect();
         }
 
         return Arena::with(['admin', 'courts'])->get();
@@ -38,7 +40,7 @@ class ArenaService
         return $arena;
     }
 
-    public function getCourts(string $id)
+    public function getCourts(string $id): Collection
     {
         $arena = $this->findArenaOrFail($id);
         $this->authorizeArenaAccess($arena);
@@ -52,7 +54,7 @@ class ArenaService
         $this->authorizeArenaAccess($arena);
 
         $data = $this->validateArenaData($request);
-        $arena->update($data);;
+        $arena->update($data);
 
         return $arena;
     }
@@ -79,15 +81,13 @@ class ArenaService
             'admin_id' => 'required',
         ]);
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
-
-        if (!Admin::find($validated['admin_id'])) {
-            throw new AdminNotFoundException();
-        }
 
         if ($user->isAdmin()) {
             $validated['admin_id'] = $user->id;
+        } elseif (!Admin::find($validated['admin_id'])) {
+            throw new AdminNotFoundException();
         }
 
         return $validated;
@@ -106,7 +106,7 @@ class ArenaService
 
     private function authorizeArenaAccess(Arena $arena): void
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
 
         if ($user->isAdmin() && $arena->admin_id !== $user->id) {

@@ -7,6 +7,7 @@ use App\Enums\ReservationStatus;
 use App\Exceptions\ReservationCanceledException;
 use App\Exceptions\ReservationNotFoundException;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
@@ -14,15 +15,22 @@ use Illuminate\Validation\ValidationException;
 
 class ReservationService
 {
-    private $authUser;
+    private User $authUser;
+    private CustomerService $customerService;
+    private Reservation $reservationModel;
+    private CourtService $courtService;
+    private CourtTimetableService $courtTimetableService;
 
     public function __construct(
-        private ArenaService $arenaService,
-        private CustomerService $customerService,
-        private Reservation $reservationModel,
-        private CourtService $courtService,
-        private CourtTimetableService $courtTimetableService
+        CustomerService $customerService,
+        Reservation $reservationModel,
+        CourtService $courtService,
+        CourtTimetableService $courtTimetableService
     ) {
+        $this->courtTimetableService = $courtTimetableService;
+        $this->courtService = $courtService;
+        $this->reservationModel = $reservationModel;
+        $this->customerService = $customerService;
         $this->authUser = Auth::user();
     }
 
@@ -65,7 +73,10 @@ class ReservationService
         return $reservation;
     }
 
-    public function cancelReservation(string $reservationId)
+    /**
+     * @throws ReservationNotFoundException
+     */
+    public function cancelReservation(string $reservationId): Reservation
     {
         $reservation = $this->getReservationById($reservationId);
 

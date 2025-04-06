@@ -12,10 +12,16 @@ use Illuminate\Validation\ValidationException;
 
 class CourtTimetableService
 {
+    private CourtService $courtService;
+    private CourtTimetable $courtTimetable;
+
     public function __construct(
-        private CourtService $courtService,
-        private CourtTimetable $courtTimetable
-    ) {}
+        CourtService $courtService,
+        CourtTimetable $courtTimetable
+    ) {
+        $this->courtTimetable = $courtTimetable;
+        $this->courtService = $courtService;
+    }
 
     public function getCourtTimetables(string $courtId): array
     {
@@ -58,11 +64,11 @@ class CourtTimetableService
             'end_time' => 'required|date_format:H:i',
             'status' => 'required|in:available,busy',
         ]);
-    
+
         $validator->after(function ($validator) use ($request) {
             $startTime = $request->input('start_time');
             $endTime = $request->input('end_time');
-    
+
             if (strtotime($endTime) <= strtotime($startTime) && $endTime !== '00:00') {
                 $validator->errors()->add('end_time', 'The end time must be longer than the start time or cross midnight.');
             }
@@ -105,7 +111,7 @@ class CourtTimetableService
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if ($user->isAdmin() && $courtTimetable->court->arena->admin_id !== $user->id) {
             throw new CourtTimetableNotFoundException();
         }
