@@ -12,32 +12,32 @@ describe('fetch all admins', function() {
         Admin::factory()->count(3)->create();
         $response = $this->actingAs($this->systemUser)->getJson(route('admins.index'));
 
-        expect($response->status())->toBe(200);
-        expect($response->json())->toHaveKeys(['success', 'results']);
-        expect($response->json('success'))->toBeTrue();
-        expect($response->json('results'))->toHaveCount(3);
+        expect($response->status())->toBe(200)
+            ->and($response->json())->toHaveKeys(['success', 'results'])
+            ->and($response->json('success'))->toBeTrue()
+            ->and($response->json('results'))->toHaveCount(3)
+            ->and($response->json('results'))
+            ->each()
+            ->toHaveKeys(['id', 'name', 'surname', 'phone', 'email', 'type', 'created_at', 'updated_at', 'deleted_at']);
 
-        expect($response->json('results'))
-        ->each()
-        ->toHaveKeys(['id','name','surname','phone','email','type','created_at','updated_at','deleted_at']);
     });
 
     test('try to get an admin without system logged in', function() {
         $response = $this->getJson(route('admins.index'));
 
-        expect($response->status())->toBe(401);
-        expect($response->json())->toHaveKeys(['success', 'message']);
-        expect($response->json('success'))->toBeFalse();
-        expect($response->json('message'))->toBeString();
+        expect($response->status())->toBe(401)
+            ->and($response->json())->toHaveKeys(['success', 'message'])
+            ->and($response->json('success'))->toBeFalse()
+            ->and($response->json('message'))->toBeString();
     });
 
     test('when there are no admins', function() {
         $response = $this->actingAs($this->systemUser)->getJson(route('admins.index'));
 
-        expect($response->status())->toBe(200);
-        expect($response->json())->toHaveKeys(['success', 'results']);
-        expect($response->json('success'))->toBeTrue();
-        expect($response->json('results'))->toHaveCount(0);
+        expect($response->status())->toBe(200)
+            ->and($response->json())->toHaveKeys(['success', 'results'])
+            ->and($response->json('success'))->toBeTrue()
+            ->and($response->json('results'))->toHaveCount(0);
     });
 });
 
