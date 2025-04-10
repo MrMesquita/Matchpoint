@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Admin extends User
 {
+    use HasFactory;
+    
     protected $table = 'users';
 
     protected $attributes = [
@@ -18,7 +22,7 @@ class Admin extends User
             $query->where('type', 'admin');
         });
     }
-    
+
     public function arenas()
     {
         return $this->hasMany(Arena::class);
