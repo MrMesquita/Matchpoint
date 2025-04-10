@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -45,6 +46,7 @@ function handleExceptions(Exceptions $exceptions): Exceptions
     })->renderable(function (ReservationCanceledException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_CONFLICT);
     })->renderable(function (Throwable $e) {
+        Log::error($e->getMessage(), [$e, $e->getFile(), $e->getLine(), $e->getTrace()]);
         return error_response($e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });
 }
