@@ -15,12 +15,13 @@ class CourtTimetableController
 
     public function __construct(
         CourtTimetableService $courtTimetableService
-    ) {
+    )
+    {
         $this->courtTimetableService = $courtTimetableService;
     }
 
     #[OA\Get(
-        path: '/api/courts/{courtId}/timetables',
+        path: '/api/v1/courts/{courtId}/timetables',
         summary: 'List timetables for a specific court',
         tags: ['Courts'],
         parameters: [
@@ -50,7 +51,7 @@ class CourtTimetableController
     }
 
     #[OA\Post(
-        path: '/api/courts/{courtId}/timetables',
+        path: '/api/v1/courts/{courtId}/timetables',
         summary: 'Create a new timetable for a court',
         requestBody: new OA\RequestBody(
             required: true,
@@ -88,7 +89,7 @@ class CourtTimetableController
     }
 
     #[OA\Delete(
-        path: '/api/courts/{court}/timetables/{timetable}',
+        path: '/api/v1/courts/{court}/timetables/{timetable}',
         summary: 'Delete a specific timetable',
         tags: ['Courts'],
         parameters: [

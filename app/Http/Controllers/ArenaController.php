@@ -19,7 +19,7 @@ class ArenaController
     }
 
     #[OA\Get(
-        path: "/api/arenas",
+        path: "/api/v1/arenas",
         summary: "List all arenas",
         security: [['bearerAuth' => []]],
         tags: ["Arenas"],
@@ -52,7 +52,7 @@ class ArenaController
     }
 
     #[OA\Post(
-        path: "/api/arenas",
+        path: "/api/v1/arenas",
         summary: "Create a new arena",
         security: [['bearerAuth' => []]],
         requestBody: new OA\RequestBody(
@@ -88,7 +88,7 @@ class ArenaController
     }
 
     #[OA\Get(
-        path: "/api/arenas/{id}",
+        path: "/api/v1/arenas/{id}",
         summary: "Find arena by id",
         security: [['bearerAuth' => []]],
         tags: ["Arenas"],
@@ -136,7 +136,7 @@ class ArenaController
     }
 
     #[OA\Get(
-        path: "/api/arenas/{id}/courts",
+        path: "/api/v1/arenas/{id}/courts",
         summary: "Get courts by arena ID",
         security: [['bearerAuth' => []]],
         tags: ["Arenas"],
@@ -192,7 +192,7 @@ class ArenaController
     }
 
     #[OA\Put(
-        path: "/api/arenas/{id}",
+        path: "/api/v1/arenas/{id}",
         summary: "Update an existing arena",
         security: [['bearerAuth' => []]],
         requestBody: new OA\RequestBody(
@@ -248,7 +248,7 @@ class ArenaController
     }
 
     #[OA\Delete(
-        path: "/api/arenas/{id}",
+        path: "/api/v1/arenas/{id}",
         summary: "Delete an existing arena",
         security: [['bearerAuth' => []]],
         tags: ["Arenas"],

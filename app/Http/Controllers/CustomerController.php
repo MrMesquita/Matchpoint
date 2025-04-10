@@ -16,12 +16,13 @@ class CustomerController extends Controller
 
     public function __construct(
         CustomerService $customerService
-    ) {
+    )
+    {
         $this->customerService = $customerService;
     }
 
     #[OA\Get(
-        path: '/api/customers',
+        path: '/api/v1/customers',
         summary: 'List all customers',
         tags: ['Customers'],
         responses: [
@@ -41,7 +42,7 @@ class CustomerController extends Controller
     }
 
     #[OA\Post(
-        path: '/api/customers',
+        path: '/api/v1/customers',
         summary: 'Create a new customer',
         requestBody: new OA\RequestBody(
             required: true,
@@ -72,7 +73,7 @@ class CustomerController extends Controller
     }
 
     #[OA\Get(
-        path: '/api/customers/{id}',
+        path: '/api/v1/customers/{id}',
         summary: 'Get a customer by ID',
         tags: ['Customers'],
         parameters: [
@@ -100,7 +101,7 @@ class CustomerController extends Controller
     }
 
     #[OA\Put(
-        path: '/api/customers/{id}',
+        path: '/api/v1/customers/{id}',
         summary: 'Update a customer',
         requestBody: new OA\RequestBody(
             required: true,
@@ -139,7 +140,7 @@ class CustomerController extends Controller
     }
 
     #[OA\Delete(
-        path: '/api/customers/{id}',
+        path: '/api/v1/customers/{id}',
         summary: 'Delete a customer',
         tags: ['Customers'],
         parameters: [

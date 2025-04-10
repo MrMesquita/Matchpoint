@@ -10,13 +10,13 @@
         }
     ],
     "paths": {
-        "/api/admins": {
+        "/api/v1/admins": {
             "get": {
                 "tags": [
                     "Administrators"
                 ],
                 "summary": "List all administrators",
-                "operationId": "27f6447f654b54ee491274c73668fa10",
+                "operationId": "e7cf36608a4fe054a3d2a3063d1246f6",
                 "responses": {
                     "200": {
                         "description": "List return successfully",
@@ -75,7 +75,7 @@
                     "Administrators"
                 ],
                 "summary": "Create a new admin",
-                "operationId": "e97775d486a8f350753ea15cdf329efb",
+                "operationId": "0a2f955e096f4c76efa99baaec6c775c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -141,13 +141,13 @@
                 ]
             }
         },
-        "/api/admins/{id}": {
+        "/api/v1/admins/{id}": {
             "get": {
                 "tags": [
                     "Administrators"
                 ],
                 "summary": "Get an admin by id",
-                "operationId": "83611b302434b0cce30148753f10aac9",
+                "operationId": "d4dfee7c8c68ef8cabc91b3c4a10c8f4",
                 "parameters": [
                     {
                         "name": "id",
@@ -201,7 +201,7 @@
                     "Administrators"
                 ],
                 "summary": "Update admin data by id",
-                "operationId": "d1fe95b300f5938f417f9d84f001d509",
+                "operationId": "3f03446867a3cf98c3392304c7c67a71",
                 "parameters": [
                     {
                         "name": "id",
@@ -291,7 +291,7 @@
                     "Administrators"
                 ],
                 "summary": "Remove an admin by ID",
-                "operationId": "4bd429e640a5c6ec94b1dd9c44369866",
+                "operationId": "e3469dcb5cb6b6977ddc7e9e65a461cb",
                 "parameters": [
                     {
                         "name": "id",
@@ -324,13 +324,13 @@
                 ]
             }
         },
-        "/api/arenas": {
+        "/api/v1/arenas": {
             "get": {
                 "tags": [
                     "Arenas"
                 ],
                 "summary": "List all arenas",
-                "operationId": "f951498ac2e4ac4c5f78b511a1a472b9",
+                "operationId": "9ea24081faea75c8a50bf7335fa49b05",
                 "responses": {
                     "200": {
                         "description": "List returned successfully",
@@ -376,7 +376,7 @@
                     "Arenas"
                 ],
                 "summary": "Create a new arena",
-                "operationId": "f59fa2224c0ee3876ec9c3f7c975fa2a",
+                "operationId": "0753e09bf235734e083a454495b22d90",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -426,13 +426,13 @@
                 ]
             }
         },
-        "/api/arenas/{id}": {
+        "/api/v1/arenas/{id}": {
             "get": {
                 "tags": [
                     "Arenas"
                 ],
                 "summary": "Find arena by id",
-                "operationId": "589bee796c7c10ad16768ef129790b75",
+                "operationId": "27f37921239550c8eef542fcec161843",
                 "parameters": [
                     {
                         "name": "id",
@@ -500,7 +500,7 @@
                     "Arenas"
                 ],
                 "summary": "Update an existing arena",
-                "operationId": "398be6ff07e5d387b342fc97ea3985af",
+                "operationId": "b98061c1d418f3ed32981715bf445be7",
                 "parameters": [
                     {
                         "name": "id",
@@ -586,7 +586,7 @@
                     "Arenas"
                 ],
                 "summary": "Delete an existing arena",
-                "operationId": "d4e953d6e188df5c8ee0a618b84602f2",
+                "operationId": "b551770726186ebd76ce53e3257e1946",
                 "parameters": [
                     {
                         "name": "id",
@@ -668,13 +668,13 @@
                 ]
             }
         },
-        "/api/arenas/{id}/courts": {
+        "/api/v1/arenas/{id}/courts": {
             "get": {
                 "tags": [
                     "Arenas"
                 ],
                 "summary": "Get courts by arena ID",
-                "operationId": "7cf85655dd5c21344297ff36edfe7f3e",
+                "operationId": "00a45ba6b94d9dcc293477e46e193496",
                 "parameters": [
                     {
                         "name": "id",
@@ -1040,13 +1040,13 @@
                 ]
             }
         },
-        "/api/courts/{courtId}/timetables": {
+        "/api/v1/courts/{courtId}/timetables": {
             "get": {
                 "tags": [
                     "Courts"
                 ],
                 "summary": "List timetables for a specific court",
-                "operationId": "fb73d88d52240fd60d221a24fff0b826",
+                "operationId": "ffc4f998d2e5160c0da121021ba86055",
                 "parameters": [
                     {
                         "name": "courtId",
@@ -1079,7 +1079,7 @@
                     "Courts"
                 ],
                 "summary": "Create a new timetable for a court",
-                "operationId": "118ec22e647e1cd5ba574ad5fd26d61c",
+                "operationId": "700f1c1f9f12c6e7deaf425d8ce08e3f",
                 "parameters": [
                     {
                         "name": "courtId",
@@ -1136,13 +1136,13 @@
                 }
             }
         },
-        "/api/courts/{court}/timetables/{timetable}": {
+        "/api/v1/courts/{court}/timetables/{timetable}": {
             "delete": {
                 "tags": [
                     "Courts"
                 ],
                 "summary": "Delete a specific timetable",
-                "operationId": "428282b2f42a9a438f611745e63a22b8",
+                "operationId": "19788cf8a5771dd398c9f02fb4701884",
                 "parameters": [
                     {
                         "name": "court",
@@ -1170,13 +1170,13 @@
                 }
             }
         },
-        "/api/customers": {
+        "/api/v1/customers": {
             "get": {
                 "tags": [
                     "Customers"
                 ],
                 "summary": "List all customers",
-                "operationId": "2b23ac696cfd81c23807c2c1fd63b0b0",
+                "operationId": "a29d5f0bab561196b8e3bd82422e58e6",
                 "responses": {
                     "200": {
                         "description": "List of customers",
@@ -1198,7 +1198,7 @@
                     "Customers"
                 ],
                 "summary": "Create a new customer",
-                "operationId": "428d5533c8386f91d2baf4de69f01468",
+                "operationId": "1d27da36718a3e9726c873633af496da",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1252,13 +1252,13 @@
                 }
             }
         },
-        "/api/customers/{id}": {
+        "/api/v1/customers/{id}": {
             "get": {
                 "tags": [
                     "Customers"
                 ],
                 "summary": "Get a customer by ID",
-                "operationId": "d51ce35bfe185b82c242dd4443ffba54",
+                "operationId": "155f59b614e1620e56fcc62e7ac86776",
                 "parameters": [
                     {
                         "name": "id",
@@ -1291,7 +1291,7 @@
                     "Customers"
                 ],
                 "summary": "Update a customer",
-                "operationId": "07a3f33c1373d3c6a97b7d8846d81472",
+                "operationId": "ba374f3626d9dc83865e940b91d5d6dd",
                 "parameters": [
                     {
                         "name": "id",
@@ -1353,7 +1353,7 @@
                     "Customers"
                 ],
                 "summary": "Delete a customer",
-                "operationId": "634844e24d72540f608f7fd297f5d8b0",
+                "operationId": "b01ba7fa065f0d5c08b1bbc777ab7108",
                 "parameters": [
                     {
                         "name": "id",
@@ -1372,13 +1372,13 @@
                 }
             }
         },
-        "/reservations": {
+        "/api/v1/reservations": {
             "get": {
                 "tags": [
                     "Reservations"
                 ],
                 "summary": "List all reservations",
-                "operationId": "69fb15b9890a0559eb50e5e1777d9b64",
+                "operationId": "f69e1b7ba36cb636ee7c9d131705aa4a",
                 "responses": {
                     "200": {
                         "description": "List of reservations returned successfully",
@@ -1405,7 +1405,7 @@
                     "Reservations"
                 ],
                 "summary": "Create a new reservation",
-                "operationId": "1aabc7d432cc652e63cfc3fb514132cd",
+                "operationId": "078fd678c910e09cab484ef265a04567",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1467,13 +1467,13 @@
                 ]
             }
         },
-        "/reservations/{id}": {
+        "/api/v1/reservations/{id}": {
             "get": {
                 "tags": [
                     "Reservations"
                 ],
                 "summary": "Get a reservation by ID",
-                "operationId": "4472ee4ed670cd72b7969d6e32473b92",
+                "operationId": "20c8c5f88286b47342d256b111345dbe",
                 "parameters": [
                     {
                         "name": "id",
@@ -1511,7 +1511,7 @@
                     "Reservations"
                 ],
                 "summary": "Cancel a reservation (admin or customer)",
-                "operationId": "fa964cce3285d6c10989429c544421ca",
+                "operationId": "ac41e2c46bd9b275d492d474527572ee",
                 "parameters": [
                     {
                         "name": "id",
@@ -1545,13 +1545,13 @@
                 ]
             }
         },
-        "/reservations/{id}/confirm": {
+        "/api/v1/reservations/{id}/confirm": {
             "post": {
                 "tags": [
                     "Reservations"
                 ],
                 "summary": "Confirm a reservation (admin only)",
-                "operationId": "cc1f2ccf1c96ad7eed5980bac37d7a5a",
+                "operationId": "25a736a7c0de4e5c9bbcca236db53312",
                 "parameters": [
                     {
                         "name": "id",

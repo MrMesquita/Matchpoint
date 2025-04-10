@@ -47,6 +47,6 @@ function handleExceptions(Exceptions $exceptions): Exceptions
         return error_response($e->getMessage(), null, Response::HTTP_CONFLICT);
     })->renderable(function (Throwable $e) {
         Log::error($e->getMessage(), [$e, $e->getFile(), $e->getLine(), $e->getTrace()]);
-        return error_response($e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return error_response("An unknown error occurred", null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });
 }
