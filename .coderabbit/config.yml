@@ -1,0 +1,12 @@
+tone: professional
+features:
+  summarize: true
+  code_review: true
+  test_suggestions: true
+  security_scan: true
+  ask_for_clarification: true
+language: pt-BR
+reviews:
+  target_branches:
+    - master
+    - develop

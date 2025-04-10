@@ -19,7 +19,7 @@ class ReservationController
     }
 
     #[OA\Get(
-        path: '/reservations',
+        path: '/api/v1/reservations',
         summary: 'List all reservations',
         security: [['bearerAuth' => []]],
         tags: ['Reservations'],
@@ -41,7 +41,7 @@ class ReservationController
     }
 
     #[OA\Post(
-        path: '/reservations',
+        path: '/api/v1/reservations',
         summary: 'Create a new reservation',
         security: [['bearerAuth' => []]],
         requestBody: new OA\RequestBody(
@@ -82,7 +82,7 @@ class ReservationController
     }
 
     #[OA\Get(
-        path: '/reservations/{id}',
+        path: '/api/v1/reservations/{id}',
         summary: 'Get a reservation by ID',
         security: [['bearerAuth' => []]],
         tags: ['Reservations'],
@@ -111,7 +111,7 @@ class ReservationController
     }
 
     #[OA\Post(
-        path: '/reservations/{id}/confirm',
+        path: '/api/v1/reservations/{id}/confirm',
         summary: 'Confirm a reservation (admin only)',
         security: [['bearerAuth' => []]],
         tags: ['Reservations'],
@@ -141,7 +141,7 @@ class ReservationController
     }
 
     #[OA\Delete(
-        path: '/reservations/{id}',
+        path: '/api/v1/reservations/{id}',
         summary: 'Cancel a reservation (admin or customer)',
         security: [['bearerAuth' => []]],
         tags: ['Reservations'],

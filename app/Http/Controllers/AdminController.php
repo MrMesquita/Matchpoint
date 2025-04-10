@@ -19,7 +19,7 @@ class AdminController extends BaseController
     }
 
     #[OA\Get(
-        path: "/api/admins",
+        path: "/api/v1/admins",
         summary: "List all administrators",
         security: [["bearerAuth" => []]],
         tags: ["Administrators"],
@@ -59,7 +59,7 @@ class AdminController extends BaseController
     }
 
     #[OA\Post(
-        path: "/api/admins",
+        path: "/api/v1/admins",
         summary: "Create a new admin",
         security: [["bearerAuth" => []]],
         requestBody: new OA\RequestBody(
@@ -99,7 +99,7 @@ class AdminController extends BaseController
     }
 
     #[OA\Get(
-        path: "/api/admins/{id}",
+        path: "/api/v1/admins/{id}",
         summary: "Get an admin by id",
         security: [["bearerAuth" => []]],
         tags: ["Administrators"],
@@ -136,7 +136,7 @@ class AdminController extends BaseController
     }
 
     #[OA\Put(
-        path: "/api/admins/{id}",
+        path: "/api/v1/admins/{id}",
         summary: "Update admin data by id",
         security: [["bearerAuth" => []]],
         requestBody: new OA\RequestBody(
@@ -189,7 +189,7 @@ class AdminController extends BaseController
     }
 
     #[OA\Delete(
-        path: "/api/admins/{id}",
+        path: "/api/v1/admins/{id}",
         summary: "Remove an admin by ID",
         security: [["bearerAuth" => []]],
         tags: ["Administrators"],

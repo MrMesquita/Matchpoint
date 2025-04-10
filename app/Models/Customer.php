@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Customer extends User
 {
+    use HasFactory;
+
     protected $table = 'users';
 
     protected static function boot()
