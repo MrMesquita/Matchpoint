@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\UserTypes;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ use OwenIt\Auditing\Auditable as Audit;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, Notifiable, SoftDeletes, Audit;
+    use HasApiTokens, Notifiable, SoftDeletes, Audit, CanResetPassword;
 
     public $timestamps = true;
 

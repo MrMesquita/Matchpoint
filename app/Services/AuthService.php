@@ -2,18 +2,28 @@
 
 namespace App\Services;
 
+use App\Exceptions\UserNotFoundException;
+use App\Mail\CustomResetPasswordMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class AuthService
 {
     private CustomerService $customerService;
+    private UserService $userService;
 
-    public function __construct(CustomerService $customerService)
+    public function __construct(
+        CustomerService $customerService,
+        UserService     $userService
+    )
     {
         $this->customerService = $customerService;
+        $this->userService = $userService;
     }
 
     public function attemptLogin(array $credentials): string
@@ -21,13 +31,13 @@ class AuthService
         $this->validateCredentials($credentials);
         if (!Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
-                'login' => ['Email e/ou senha inválido'],
+                'login' => ['Email and/or password invalids'],
             ]);
         }
 
         /** @var User $user */
         $user = Auth::user();
-        return $user->createToken($user->name, ['*'], now()->addDays(3))->plainTextToken;
+        return $user->createToken($user->name, ['*'])->plainTextToken;
     }
 
     private function validateCredentials(array $credentials)
@@ -52,5 +62,49 @@ class AuthService
             'email' => $customer->email,
             'password' => $password,
         ]);
+    }
+
+    public function forgotPassword(Request $request): void
+    {
+        validator($request->all(), [
+            'email' => 'required|email'
+        ])->validate();
+
+        $user = $this->userService->getUserByEmail($request->input('email'));
+        if ($user) {
+            $token = Password::createToken($user);
+            $urlRecoveryToken = config('app.client_url') . "/reset-password/$token";
+            Mail::to($user->email)->send(new CustomResetPasswordMail($user, $urlRecoveryToken));
+        }
+    }
+
+    public function resetPassword(Request $request): void
+    {
+        validator($request->all(), [
+            'email' => 'required|email',
+            'token' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ])->validate();
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) use ($request) {
+                $user->forceFill([
+                    'password' => bcrypt($password),
+                ])->save();
+
+                $user->tokens()->delete();
+            }
+        );
+
+        if ($status === Password::INVALID_TOKEN) {
+            throw ValidationException::withMessages([
+                'token' => ['This password reset token is invalid or expired.'],
+            ]);
+        } else if ($status === Password::INVALID_USER) {
+            throw ValidationException::withMessages([
+                'email' => ['This user does not exist.'],
+            ]);
+        }
     }
 }

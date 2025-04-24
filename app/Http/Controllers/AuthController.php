@@ -102,6 +102,18 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $token = $this->authService->registerCustomer($request);
-        return success_response(['token' => $token], "Registration successful", Response::HTTP_CREATED);
+        return success_response(['token' => $token], "Registered successfully", Response::HTTP_CREATED);
+    }
+    
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $this->authService->forgotPassword($request);
+        return success_response("Email sent successfully");
+    }
+
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $this->authService->resetPassword($request);
+        return success_response("Password reset successfully");
     }
 }

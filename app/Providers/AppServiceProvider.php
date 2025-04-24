@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
     private function setupLogViewer(): void
     {
-        LogViewer::auth(fn(Request $request) => auth()?->user()?->isAdmin());
+        LogViewer::auth(fn(Request $request) => config('app.env') !== 'production');
     }
 }
