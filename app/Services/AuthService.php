@@ -70,7 +70,7 @@ class AuthService
             'email' => 'required|email'
         ])->validate();
 
-        $user = $this->userService->getUserByEmail($request->input('email'));
+        $user = $this->userService->getUserByEmailWithoutException($request->input('email'));
         if ($user) {
             $token = Password::createToken($user);
             $urlRecoveryToken = config('app.client_url') . "/reset-password/$token";
