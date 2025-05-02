@@ -144,7 +144,7 @@ class AuthController extends Controller
     )]
     public function forgotPassword(Request $request): JsonResponse
     {
-        $this->authService->forgotPassword($request);
+        $this->authService->forgotPassword($request->email);
         return success_response("Email sent successfully");
     }
 

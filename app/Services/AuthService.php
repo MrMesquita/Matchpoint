@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class AuthService
 {
     private CustomerService $customerService;
+
     private UserService $userService;
 
     public function __construct(
@@ -64,13 +65,13 @@ class AuthService
         ]);
     }
 
-    public function forgotPassword(Request $request): void
+    public function forgotPassword(string $email): void
     {
-        validator($request->all(), [
+        validator(['email' => $email], [
             'email' => 'required|email'
         ])->validate();
 
-        $user = $this->userService->getUserByEmailWithoutException($request->input('email'));
+        $user = $this->userService->getUserByEmailWithoutException($email);
         if ($user) {
             $token = Password::createToken($user);
             $urlRecoveryToken = config('app.client_url') . "/reset-password/$token";

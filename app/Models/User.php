@@ -14,7 +14,7 @@ use OwenIt\Auditing\Auditable as Audit;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, Notifiable, SoftDeletes, Audit, CanResetPassword;
+    use HasApiTokens, Notifiable, SoftDeletes, Audit, CanResetPassword, HasFactory;
 
     public $timestamps = true;
 
