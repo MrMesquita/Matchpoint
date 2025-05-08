@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -185,9 +186,9 @@ class AuthController extends Controller
             )
         ]
     )]
-    public function resetPassword(Request $request): JsonResponse
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
-        $this->authService->resetPassword($request);
+        $this->authService->resetPassword($request->toDTO());
         return success_response("Password reset successfully");
     }
 }

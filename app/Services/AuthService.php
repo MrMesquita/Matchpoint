@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Dtos\ResetPasswordDTO;
 use App\Exceptions\UserNotFoundException;
 use App\Mail\CustomResetPasswordMail;
 use App\Models\User;
@@ -79,24 +80,15 @@ class AuthService
         }
     }
 
-    public function resetPassword(Request $request): void
+    public function resetPassword(ResetPasswordDTO $dto): void
     {
-        validator($request->all(), [
-            'email' => 'required|email',
-            'token' => 'required',
-            'password' => 'required|min:8|confirmed',
-        ])->validate();
+        $status = Password::reset((array)$dto, function (User $user, string $password) use ($dto) {
+            $user->forceFill([
+                'password' => bcrypt($password),
+            ])->save();
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) use ($request) {
-                $user->forceFill([
-                    'password' => bcrypt($password),
-                ])->save();
-
-                $user->tokens()->delete();
-            }
-        );
+            $user->tokens()->delete();
+        });
 
         if ($status === Password::INVALID_TOKEN) {
             throw ValidationException::withMessages([

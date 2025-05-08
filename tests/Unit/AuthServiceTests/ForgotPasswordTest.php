@@ -78,6 +78,7 @@ test("sent a invalid email or null", function () {
 
     try {
         $response = $authService->forgotPassword($email);
+        $this->fail('ValidationException was not thrown');
     } catch (ValidationException $e) {
         expect($e->errors())
             ->toHaveKey("email");
