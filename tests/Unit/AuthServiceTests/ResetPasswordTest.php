@@ -11,24 +11,31 @@ use Illuminate\Validation\ValidationException;
 
 uses(RefreshDatabase::class);
 
+function mockUserModel()
+{
+    $userMock = Mockery::mock(User::class);
+
+    $userMock->shouldReceive('getAttribute')->with('email')->andReturn('user@example.com');
+    $userMock->shouldReceive('forceFill')->once()->andReturnSelf();
+    $userMock->shouldReceive('save')->once()->andReturn(true);
+    $userMock->shouldReceive('tokens')->once()->andReturn(
+        Mockery::mock()->shouldReceive('delete')->once()->getMock()
+    );
+
+    return $userMock;
+}
+
 test("it can be reset password", function () {
     $customerServiceMock = Mockery::mock(CustomerService::class);
     $userServiceMock = Mockery::mock(UserService::class);
 
-    $userMock = Mockery::mock(User::class)->makePartial();
-    $userMock->email = 'user@example.com';
+    $userMock = mockUserModel();
 
     $dto = new ResetPasswordDTO(
         email: $userMock->email,
         token: 'valid.token',
         password: 'password',
         password_confirmation: 'password'
-    );
-
-    $userMock->shouldReceive('forceFill')->once()->andReturnSelf();
-    $userMock->shouldReceive('save')->once()->andReturn(true);
-    $userMock->shouldReceive('tokens')->once()->andReturn(
-        Mockery::mock()->shouldReceive('delete')->once()->getMock()
     );
 
     Password::shouldReceive('reset')
@@ -48,11 +55,7 @@ test("try to reset password with invalid token", function () {
     $customerServiceMock = Mockery::mock(CustomerService::class);
     $userServiceMock = Mockery::mock(UserService::class);
 
-    $userMock = Mockery::mock(User::class);
-    $userMock->shouldReceive('forceFill')->once()->andReturnSelf();
-    $userMock->shouldReceive('save')->once();
-    $userMock->shouldReceive('tokens')->andReturnSelf();
-    $userMock->shouldReceive('delete')->once();
+    $userMock = mockUserModel();
 
     $dto = new ResetPasswordDTO(
         email: 'user@example.com',
@@ -83,14 +86,10 @@ test('try to reset password with invalid user', function () {
     $customerServiceMock = Mockery::mock(CustomerService::class);
     $userServiceMock = Mockery::mock(UserService::class);
 
-    $userMock = Mockery::mock(User::class);
-    $userMock->shouldReceive('forceFill')->once()->andReturnSelf();
-    $userMock->shouldReceive('save')->once();
-    $userMock->shouldReceive('tokens')->andReturnSelf();
-    $userMock->shouldReceive('delete')->once();
+    $userMock = mockUserModel();
 
     $dto = new ResetPasswordDTO(
-        email: 'example.invalid@user.com',
+        email: 'user@example.com',
         token: 'invalid.token',
         password: 'password',
         password_confirmation: 'password'
