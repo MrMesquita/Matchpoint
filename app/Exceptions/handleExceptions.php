@@ -36,7 +36,7 @@ function handleExceptions(Exceptions $exceptions): Exceptions
     })->renderable(function (ArenaNotFoundException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (CustomerNotFoundException $e) {
-        return error_response($e->getMessage(), null, $e->getCode());
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (CourtNotFoundException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (CourtTimetableNotFoundException $e) {
@@ -45,6 +45,8 @@ function handleExceptions(Exceptions $exceptions): Exceptions
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (ReservationCanceledException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_CONFLICT);
+    })->renderable(function (UserNotFoundException $e) {
+        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (Throwable $e) {
         Log::error($e->getMessage(), [$e, $e->getFile(), $e->getLine(), $e->getTrace()]);
         return error_response("An unknown error occurred", null, Response::HTTP_INTERNAL_SERVER_ERROR);

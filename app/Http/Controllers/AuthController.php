@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -102,6 +103,92 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $token = $this->authService->registerCustomer($request);
-        return success_response(['token' => $token], "Registration successful", Response::HTTP_CREATED);
+        return success_response(['token' => $token], "Registered successfully", Response::HTTP_CREATED);
+    }
+
+    #[OA\Post(
+        path: "/api/v1/auth/forgot-password",
+        description: "User can receive a email to recovery your password",
+        summary: "Forgot password",
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(ref: "#/components/schemas/ForgotPasswordRequest")
+            )
+        ),
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Forgot password successful",
+                content: new OA\MediaType(
+                    mediaType: "application/json",
+                    schema: new OA\Schema(
+                        type: "object",
+                        properties: [
+                            new OA\Property(
+                                property: "message",
+                                type: "string",
+                                example: "Email sent successfully"
+                            )
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Validation error",
+                content: new OA\JsonContent(ref: "#/components/schemas/ValidationError")
+            )
+        ]
+    )]
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $this->authService->forgotPassword($request->email);
+        return success_response("Email sent successfully");
+    }
+
+    #[OA\Post(
+        path: "/api/v1/auth/reset-password",
+        description: "Reset password",
+        summary: "Reset password",
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: "application/json",
+                schema: new OA\Schema(ref: "#/components/schemas/AuthResetPasswordRequest")
+            )
+        ),
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Reset password successful",
+                content: new OA\MediaType(
+                    mediaType: "application/json",
+                    schema: new OA\Schema(
+                        type: "object",
+                        properties: [
+                            new OA\Property(
+                                property: "message",
+                                type: "string",
+                                example: "Password reset successfully"
+                            )
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(
+                response: 400,
+                description: "Validation error",
+                content: new OA\JsonContent(ref: "#/components/schemas/ValidationError")
+            )
+        ]
+    )]
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $this->authService->resetPassword($request->toDTO());
+        return success_response("Password reset successfully");
     }
 }

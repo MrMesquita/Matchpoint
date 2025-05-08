@@ -5,8 +5,7 @@ use App\Constants\UserTypes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,9 +14,9 @@ return new class extends Migration
         DB::table('users')->insert([
             'name' => 'System',
             'surname' => 'User',
-            'phone' => env('SYSTEM_PHONE'),
-            'email' => env('SYSTEM_EMAIL'),
-            'password' => Hash::make(env('SYSTEM_PASSWORD')),
+            'phone' => config('system-user.phone'),
+            'email' => config('system-user.email'),
+            'password' => Hash::make(config('system-user.password')),
             'type' => UserTypes::SYSTEM,
             'created_at' => now(),
             'updated_at' => now(),

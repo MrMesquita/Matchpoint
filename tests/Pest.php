@@ -13,7 +13,7 @@
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +41,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function checkSuccessCase($response, $count = null) {
+function checkSuccessCase($response, $count = null)
+{
     expect($response->status())->toBe(200);
     expect($response->json())->toHaveKeys(['success', 'results']);
     expect($response->json('success'))->toBeTrue();
@@ -51,37 +52,41 @@ function checkSuccessCase($response, $count = null) {
     }
 }
 
-function checkCreatedCase($response) {
+function checkCreatedCase($response)
+{
     expect($response->getStatusCode())->toBe(201);
     expect($response->json())->toHaveKeys(['success', 'results']);
     expect($response->json('success'))->toBeTrue();
     expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
 }
 
-function checkValidationErrorCase($response) {
+function checkValidationErrorCase($response)
+{
     expect($response->status())->toBe(400);
     expect($response->json())->toHaveKeys(['success', 'message', 'errors']);
     expect($response->json('success'))->toBeFalse();
     expect($response->json('message'))->toBeString();
 }
 
-function checkNotFoundCase($response) {
+function checkNotFoundCase($response)
+{
     expect($response->status())->toBe(404);
     expect($response->json())->toHaveKeys(['success', 'message']);
     expect($response->json('success'))->toBeFalse();
     expect($response->json('message'))->toBeString();
 }
 
-function checkReservationsResults($reservations) {
+function checkReservationsResults($reservations)
+{
     foreach ($reservations as $reservation) {
         expect($reservation)->toHaveKeys([
             'id',
-            'customer_id', 
-            'court_id', 
-            'court_timetable_id', 
-            'status', 
-            'customer', 
-            'court', 
+            'customer_id',
+            'court_id',
+            'court_timetable_id',
+            'status',
+            'customer',
+            'court',
             'court_timetable'
         ]);
 
