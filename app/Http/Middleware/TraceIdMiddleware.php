@@ -32,7 +32,7 @@ class TraceIdMiddleware
             'ip' => $request->ip(),
             'user' => auth()->user()?->email ?? 'guest',
             'trace_id' => $traceId,
-            'body' => $data ?? "empty"
+            'body' => $data ?? "empty",
         ]);
 
         $response = $next($request);

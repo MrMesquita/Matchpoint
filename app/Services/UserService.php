@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Exceptions\UserNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserService
 {
@@ -15,7 +16,7 @@ class UserService
     private function findUserOrFail($email): User
     {
         return User::where('email', $email)->first()
-            ?? throw new UserNotFoundException();
+            ?? throw new ModelNotFoundException(User::class);
     }
 
     public function getUserByEmailWithoutException(string $email): User|null
