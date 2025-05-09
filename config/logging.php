@@ -54,7 +54,10 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'slack-error'],
+            'channels' => array_filter([
+                'daily',
+                env('APP_ENV') === 'production' ? 'slack-error' : null,
+            ]),
             'ignore_exceptions' => false,
         ],
 

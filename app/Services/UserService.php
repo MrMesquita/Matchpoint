@@ -13,7 +13,12 @@ class UserService
         return $this->findUserOrFail($email);
     }
 
-    private function findUserOrFail($email): User
+    public function getUserById(int $userId): User
+    {
+        return User::findOrFail($userId);
+    }
+
+    private function findUserByEmail($email): User
     {
         return User::where('email', $email)->first()
             ?? throw new ModelNotFoundException(User::class);
