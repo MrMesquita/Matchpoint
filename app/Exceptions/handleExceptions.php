@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Models\ErrorLog;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -48,7 +49,16 @@ function handleExceptions(Exceptions $exceptions): Exceptions
     })->renderable(function (UserNotFoundException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (Throwable $e) {
-        Log::error($e->getMessage(), [$e, $e->getFile(), $e->getLine(), $e->getTrace()]);
-        return error_response("An unknown error occurred", null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        Log::channel('slack-error')->critical($e->getMessage(), [
+            'trace_id' => app('trace_id'),
+            'exception' => (string)$e,
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'user_id' => optional(auth()->user())->id,
+            'url' => request()->fullUrl(),
+            'ip' => request()->ip()
+        ]);
+
+        return error_response("An unknown error occurred! Please contact support. trace_id= " . app('trace_id'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
     });
 }
