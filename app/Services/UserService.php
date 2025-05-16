@@ -13,7 +13,7 @@ class UserService
         return $this->findUserOrFail($email);
     }
 
-    public function getUserById(int $userId): User
+    public function getUserById(int|null $userId): User
     {
         return User::findOrFail($userId);
     }

@@ -90,6 +90,24 @@ class ProfileController
                         new Property(property: "message", type: "string", example: "Update profile.")
                     ]
                 )
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Tries access without system login",
+                content: new OA\JsonContent(
+                    type: "array",
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: "success", type: "boolean", example: false),
+                            new OA\Property(property: "message", type: "string", example: "Unauthenticated.")
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: "User not found",
+                content: new OA\JsonContent(ref: "#/components/schemas/NotFound")
             )
         ]
     )]

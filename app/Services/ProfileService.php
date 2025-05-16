@@ -20,7 +20,7 @@ class ProfileService
 
     public function getProfileData(): ProfileResource
     {
-        return ProfileResource::make($user);
+        return ProfileResource::make($this->user);
     }
 
     public function updateProfile(UpdateProfileDTO $updateProfileDTO): void
