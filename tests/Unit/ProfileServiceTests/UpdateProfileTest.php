@@ -7,7 +7,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
 
-test('example', function () {
+test('it can bet update profile', function () {
     $faker = Faker::create();
     $updateProfileDto = new UpdateProfileDto(
         $faker->name,
