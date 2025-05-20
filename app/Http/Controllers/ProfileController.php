@@ -6,6 +6,7 @@ use App\Dtos\UpdateProfileDTO;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\ProfileService;
 use Illuminate\Http\Request;
+use OpenApi\Attributes\Delete;
 use OpenApi\Attributes\Get;
 use OpenApi\Attributes\Items;
 use OpenApi\Attributes\JsonContent;
@@ -15,6 +16,7 @@ use OpenApi\Attributes\Put;
 use OpenApi\Attributes\RequestBody;
 use OpenApi\Attributes\Response;
 use OpenApi\Attributes\Schema;
+use function success_response;
 
 #[OA\Tag(name: "Profiles")]
 class ProfileController
@@ -50,7 +52,7 @@ class ProfileController
             ),
             new OA\Response(
                 response: 401,
-                description: "Tries access without system login",
+                description: "Tries access without login",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(
@@ -93,7 +95,7 @@ class ProfileController
             ),
             new OA\Response(
                 response: 401,
-                description: "Tries access without system login",
+                description: "Tries access without login",
                 content: new OA\JsonContent(
                     type: "array",
                     items: new OA\Items(
@@ -115,5 +117,48 @@ class ProfileController
     {
         $this->profileService->updateProfile($request->toDTO());
         return success_response(null, "Profile updated successfully");
+    }
+
+    #[Delete(
+        path: "/api/v1/profiles",
+        description: "Delete a profile",
+        summary: "Delete a profile",
+        tags: ["profiles"],
+        security: [['bearerAuth' => []]],
+        responses: [
+            new Response(
+                response: 200,
+                description: "Profile deleted successfully",
+                content: new JsonContent(
+                    properties: [
+                        new Property(property: "success", type: "boolean", example: true),
+                        new Property(property: "message", type: "string", example: "Deleted profile.")
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Tries access without login",
+                content: new OA\JsonContent(
+                    type: "array",
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: "success", type: "boolean", example: false),
+                            new OA\Property(property: "message", type: "string", example: "Unauthenticated.")
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: "User not found Or User Already deleted",
+                content: new OA\JsonContent(ref: "#/components/schemas/NotFound")
+            )
+        ]
+    )]
+    public function deleteProfile()
+    {
+        $this->profileService->deleteProfile();
+        return success_response(null, "Profile deleted successfully");
     }
 }

@@ -4,6 +4,7 @@ use App\Dtos\UpdateProfileDTO;
 use App\Models\User;
 use App\Services\ProfileService;
 use App\Services\UserService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
 
@@ -37,3 +38,13 @@ test('it can bet update profile', function () {
     $profileService = new ProfileService($userService);
     $profileService->updateProfile($updateProfileDto);
 });
+
+test('try update profile data without login', function () {
+    $userService = mock(UserService::class);
+    $userService->shouldReceive('getUserById')
+        ->once()->andThrow(ModelNotFoundException::class);
+
+    $profileService = new ProfileService($userService);
+
+    $profileService->updateProfile();
+})->throws(ModelNotFoundException::class);

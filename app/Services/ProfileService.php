@@ -32,4 +32,9 @@ class ProfileService
             'email' => $updateProfileDTO->email,
         ]);
     }
+
+    public function deleteProfile(): void
+    {
+        $this->user->delete();
+    }
 }

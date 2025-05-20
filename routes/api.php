@@ -75,6 +75,7 @@ Route::prefix("/v1")->group(function () {
         Route::prefix('/profiles')->group(function () {
             Route::get('', [ProfileController::class, 'profile'])->name('profiles.profile');
             Route::put('', [ProfileController::class, 'updateProfile'])->name('profiles.updateProfile');
+            Route::delete('', [ProfileController::class, 'deleteProfile'])->name('profiles.deleteProfile');
         });
     });
 });
