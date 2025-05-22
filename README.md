@@ -1,5 +1,4 @@
-
-# 🎾 Matchpoint
+# 🏐 Matchpoint
 
 **Matchpoint** is a web platform developed with Laravel with the aim of connecting people interested in practicing volleyball in groups. The application facilitates the creation and management of matches, promoting interaction between users and volleyball arenas.
 
