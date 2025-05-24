@@ -26,11 +26,11 @@ describe('update a court', function () {
                 $this->updatedCourtData
             );
 
-        expect($response->getStatusCode())->toBe(200);
-        expect($response->json())->toHaveKeys(['success', 'results']);
-        expect($response->json('success'))->toBeTrue();
-        expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
-        expect($response->json('results')[0])->toMatchArray($this->updatedCourtData);
+        expect($response->getStatusCode())->toBe(200)
+            ->and($response->json())->toHaveKeys(['success', 'results'])
+            ->and($response->json('success'))->toBeTrue()
+            ->and($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at'])
+            ->and($response->json('results')[0])->toMatchArray($this->updatedCourtData);
     });
 
     test("admin tries to update a court that doesn't belong to him", function () {
@@ -41,10 +41,10 @@ describe('update a court', function () {
                 $this->updatedCourtData
             );
 
-        expect($response->status())->toBe(404);
-        expect($response->json())->toHaveKeys(['success', 'message']);
-        expect($response->json('success'))->toBeFalse();
-        expect($response->json('message'))->toBeString();
+        expect($response->status())->toBe(404)
+            ->and($response->json())->toHaveKeys(['success', 'message'])
+            ->and($response->json('success'))->toBeFalse()
+            ->and($response->json('message'))->toBeString();
     });
 
     test("system can update an arena", function () {
@@ -57,11 +57,11 @@ describe('update a court', function () {
                 $this->updatedCourtData
             );
 
-        expect($response->getStatusCode())->toBe(200);
-        expect($response->json())->toHaveKeys(['success', 'results']);
-        expect($response->json('success'))->toBeTrue();
-        expect($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at']);
-        expect($response->json('results')[0])->toMatchArray($this->updatedCourtData);
+        expect($response->getStatusCode())->toBe(200)
+            ->and($response->json())->toHaveKeys(['success', 'results'])
+            ->and($response->json('success'))->toBeTrue()
+            ->and($response->json('results')[0])->toHaveKeys(['id', 'created_at', 'updated_at'])
+            ->and($response->json('results')[0])->toMatchArray($this->updatedCourtData);
     });
 
     test('try to update an arena without logged in', function() {
@@ -84,7 +84,7 @@ describe('update a court', function () {
                 route('courts.update', ['court' => $this->court->id]),
                 $this->updatedCourtData
             );
-        
+
         expect($response->status())->toBe(404);
         expect($response->json())->toHaveKeys(['success', 'message']);
         expect($response->json('success'))->toBeFalse();

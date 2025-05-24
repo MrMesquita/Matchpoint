@@ -7,10 +7,12 @@ use App\Exceptions\ReservationNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable as Audit;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Reservation extends Model
+class Reservation extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Audit;
 
     protected $fillable = [
         'customer_id',
@@ -71,7 +73,7 @@ class Reservation extends Model
     public function getReservationById($id, $user)
     {
         $query = $this->with(['customer', 'court', 'courtTimetable']);
-    
+
         if ($user->type === 'admin') {
             $query->whereHas('court.arena', function ($q) use ($user) {
                 $q->where('admin_id', $user->id);
@@ -79,33 +81,31 @@ class Reservation extends Model
         } elseif ($user->type === 'customer') {
             $query->where('customer_id', $user->id);
         }
-    
-        $reservation = $query->find($id);
-    
-        return $reservation;
-    }    
 
-    public function existsConflictingReservation($courtId, $courtTimetable) 
+        return $query->find($id);
+    }
+
+    public function existsConflictingReservation($courtId, $courtTimetable)
     {
         $conflictingReservation = $this->where('court_id', $courtId)
             ->where('status', ReservationStatus::CONFIRMED)
             ->whereHas('courtTimetable', function ($query) use ($courtTimetable) {
-                $query->where('day_of_week', $courtTimetable->day_of_week) 
+                $query->where('day_of_week', $courtTimetable->day_of_week)
                     ->where('start_time', '<', $courtTimetable->end_time)
                     ->where('end_time', '>', $courtTimetable->start_time);
             })
             ->exists();
-    
+
         return $conflictingReservation;
-    }  
-    
-    public function getPendingReservationsForSchedule($courtId, $courtTimetableId) 
+    }
+
+    public function getPendingReservationsForSchedule($courtId, $courtTimetableId)
     {
         $reservations = $this->where('status', ReservationStatus::PENDING)
             ->where('court_id', $courtId)
             ->where('court_timetable_id', $courtTimetableId)
-            ->get();   
-            
+            ->get();
+
         return $reservations;
     }
 }

@@ -6,6 +6,7 @@ use App\Exceptions\AdminNotFoundException;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -13,29 +14,40 @@ use Illuminate\Validation\UnauthorizedException;
 
 class AdminService
 {
-    public function __construct(
-        private ArenaService $arenaService
-    ) { }
+    private ArenaService $arenaService;
 
-    public function getAllAdmins()
+    public function __construct(
+        ArenaService $arenaService
+    )
+    {
+        $this->arenaService = $arenaService;
+    }
+
+    public function getAllAdmins(): Collection
     {
         return Admin::all();
     }
 
-    public function createAdmin(Request $request)
+    public function createAdmin(Request $request): Admin
     {
         $data = $this->validateAdminData($request);
         return $this->storeAdmin($data);
     }
 
-    public function getAdminById(string $id)
+    /**
+     * @throws AdminNotFoundException
+     */
+    public function getAdminById(string $id): Admin
     {
-        return $this->findAdminOrFail($id);
+        return Admin::findOrFail($id);
     }
 
-    public function updateAdmin(Request $request, string $id)
+    /**
+     * @throws AdminNotFoundException
+     */
+    public function updateAdmin(Request $request, string $id): Admin
     {
-        $admin = $this->findAdminOrFail($id);
+        $admin = Admin::findOrFail($id);
 
         $data = $this->validateAdminData($request, $admin);
         $this->updateAdminData($admin, $data);
@@ -43,15 +55,21 @@ class AdminService
         return $admin;
     }
 
-    public function deleteAdmin(string $id)
+    /**
+     * @throws AdminNotFoundException
+     */
+    public function deleteAdmin(string $id): void
     {
-        $admin = $this->findAdminOrFail($id);
+        $admin = Admin::findOrFail($id);
         $this->deleteAdminRecord($admin);
     }
 
+    /**
+     * @throws AdminNotFoundException
+     */
     public function getArenas($adminId = null)
     {
-        $admin = $this->findAdminOrFail($adminId ?? Auth::id());
+        $admin = Admin::findOrFail($adminId ?? Auth::id());
         return $admin->arenas->all();
     }
 
@@ -78,16 +96,6 @@ class AdminService
     {
         $data['password'] = Hash::make($data['password']);
         return Admin::create($data);
-    }
-
-    private function findAdminOrFail(string $id): Admin
-    {
-        $admin = Admin::find($id);
-        if (!$admin) {
-            throw new AdminNotFoundException();
-        }
-
-        return $admin;
     }
 
     private function updateAdminData(Admin $admin, array $data): void
