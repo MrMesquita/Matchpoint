@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Dtos\FormRequest;
 use App\Dtos\ResetPasswordDTO;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ResetPasswordRequest extends FormRequest
 {

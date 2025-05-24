@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Dtos\UpdateProfileDTO;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\ProfileService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes\Delete;
-use OpenApi\Attributes\Get;
 use OpenApi\Attributes\Items;
-use OpenApi\Attributes\JsonContent;
-use OpenApi\Attributes\MediaType;
-use OpenApi\Attributes\Property;
-use OpenApi\Attributes\Put;
-use OpenApi\Attributes\RequestBody;
-use OpenApi\Attributes\Response;
-use OpenApi\Attributes\Schema;
+use OpenApi\Attributes as OA;
 use function success_response;
 
 #[OA\Tag(name: "Profiles")]
@@ -28,20 +20,20 @@ class ProfileController
         $this->profileService = $profileService;
     }
 
-    #[Get(
+    #[OA\Get(
         path: "/api/v1/profiles/",
         description: "Get a profile",
         summary: "Get a profile",
-        tags: ["profiles"],
         security: [['bearerAuth' => []]],
+        tags: ["profiles"],
         responses: [
-            new Response(
+            new OA\Response(
                 response: 200,
                 description: "List returned successfully",
-                content: new JsonContent(
+                content: new OA\JsonContent(
                     properties: [
-                        new Property(property: "success", type: "boolean", example: true),
-                        new Property(
+                        new OA\Property(property: "success", type: "boolean", example: true),
+                        new OA\Property(
                             property: "results",
                             type: "array",
                             items: new Items(ref: "#/components/schemas/ProfileResponse")
@@ -70,26 +62,26 @@ class ProfileController
             )
         ]
     )]
-    public function profile()
+    public function profile(): JsonResponse
     {
         $data = $this->profileService->getProfileData();
         return success_response($data);
     }
 
-    #[Put(
+    #[OA\Put(
         path: "/api/v1/profiles",
         description: "Edit a profile",
         summary: "Edit a profile",
-        tags: ["profiles"],
         security: [['bearerAuth' => []]],
+        tags: ["profiles"],
         responses: [
-            new Response(
+            new OA\Response(
                 response: 200,
                 description: "Profile updated successfully",
-                content: new JsonContent(
+                content: new OA\JsonContent(
                     properties: [
-                        new Property(property: "success", type: "boolean", example: true),
-                        new Property(property: "message", type: "string", example: "Update profile.")
+                        new OA\Property(property: "success", type: "boolean", example: true),
+                        new OA\Property(property: "message", type: "string", example: "Update profile.")
                     ]
                 )
             ),
@@ -113,7 +105,7 @@ class ProfileController
             )
         ]
     )]
-    public function updateProfile(UpdateProfileRequest $request)
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
         $this->profileService->updateProfile($request->toDTO());
         return success_response(null, "Profile updated successfully");
@@ -123,16 +115,16 @@ class ProfileController
         path: "/api/v1/profiles",
         description: "Delete a profile",
         summary: "Delete a profile",
-        tags: ["profiles"],
         security: [['bearerAuth' => []]],
+        tags: ["profiles"],
         responses: [
-            new Response(
+            new OA\Response(
                 response: 200,
                 description: "Profile deleted successfully",
-                content: new JsonContent(
+                content: new OA\JsonContent(
                     properties: [
-                        new Property(property: "success", type: "boolean", example: true),
-                        new Property(property: "message", type: "string", example: "Deleted profile.")
+                        new OA\Property(property: "success", type: "boolean", example: true),
+                        new OA\Property(property: "message", type: "string", example: "Deleted profile.")
                     ]
                 )
             ),
@@ -156,7 +148,7 @@ class ProfileController
             )
         ]
     )]
-    public function deleteProfile()
+    public function deleteProfile(): JsonResponse
     {
         $this->profileService->deleteProfile();
         return success_response(null, "Profile deleted successfully");

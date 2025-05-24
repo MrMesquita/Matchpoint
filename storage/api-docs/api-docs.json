@@ -944,6 +944,16 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1458,6 +1468,216 @@
                 }
             }
         },
+        "/api/v1/profiles/": {
+            "get": {
+                "tags": [
+                    "profiles"
+                ],
+                "summary": "Get a profile",
+                "description": "Get a profile",
+                "operationId": "c61b8de2e48944993359af6517eb6692",
+                "responses": {
+                    "200": {
+                        "description": "List returned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileResponse"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Tries access without login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Unauthenticated."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Admin not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/profiles": {
+            "put": {
+                "tags": [
+                    "profiles"
+                ],
+                "summary": "Edit a profile",
+                "description": "Edit a profile",
+                "operationId": "9f67a92f42b437a2721e45e9c755b439",
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update profile."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Tries access without login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Unauthenticated."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "profiles"
+                ],
+                "summary": "Delete a profile",
+                "description": "Delete a profile",
+                "operationId": "24de2e54c0b7a3c3099ceb05512a52e1",
+                "responses": {
+                    "200": {
+                        "description": "Profile deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted profile."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Tries access without login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": false
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Unauthenticated."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found Or User Already deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/reservations": {
             "get": {
                 "tags": [
@@ -1837,6 +2057,11 @@
                         "format": "password",
                         "example": "12345678"
                     },
+                    "password_confirmation": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "12345678"
+                    },
                     "token": {
                         "type": "string",
                         "format": "token",
@@ -2057,6 +2282,39 @@
                 },
                 "type": "object"
             },
+            "ProfileResponse": {
+                "required": [
+                    "id",
+                    "name",
+                    "surname",
+                    "phone",
+                    "email"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "João"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Silva"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+55 11 99999-9999"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "joao.silva@email.com"
+                    }
+                },
+                "type": "object"
+            },
             "RegisterRequest": {
                 "required": [
                     "name",
@@ -2203,6 +2461,10 @@
         },
         {
             "name": "Reservations"
+        },
+        {
+            "name": "profiles",
+            "description": "profiles"
         }
     ]
 }
