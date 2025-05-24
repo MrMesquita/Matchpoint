@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\TraceIdHelper;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,8 +20,7 @@ class TraceIdMiddleware
     {
         $traceId = $request->headers->get('X-Trace-Id') ?? (string)Str::uuid();
 
-        Log::withContext(['traceId' => $traceId]);
-        app()->instance('trace_id', $traceId);
+        TraceIdHelper::set($traceId);
 
         if ($request->isMethod('POST') || $request->isMethod('PUT') || $request->isMethod('PATCH')) {
             $data = $request->except(['password', 'password_confirmation']);
@@ -31,7 +31,7 @@ class TraceIdMiddleware
             'method' => $request->method(),
             'ip' => $request->ip(),
             'user' => auth()->user()?->email ?? 'guest',
-            'trace_id' => $traceId,
+            'trace_id' => TraceIdHelper::get($traceId),
             'body' => $data ?? "empty",
         ]);
 

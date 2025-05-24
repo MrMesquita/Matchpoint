@@ -2,8 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Models\ErrorLog;
-use Exception;
+use App\Helpers\TraceIdHelper;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -21,9 +20,9 @@ function handleExceptions(Exceptions $exceptions): Exceptions
 {
     return $exceptions->renderable(function (NotFoundHttpException $e) {
         if ($e->getPrevious() instanceof ModelNotFoundException) {
-            $modelException = $e->getPrevious();
+            $modelName = class_basename($e->getModel());
             return error_response(
-                class_basename($modelException->getModel()) . " not found",
+                "{$modelName} not found",
                 null,
                 Response::HTTP_NOT_FOUND
             );
@@ -46,13 +45,13 @@ function handleExceptions(Exceptions $exceptions): Exceptions
         return error_response($e->getMessage() . " a " . $e->getModel(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (ReservationCanceledException $e) {
         return error_response($e->getMessage(), null, Response::HTTP_CONFLICT);
-    })->renderable(function (UserNotFoundException $e) {
-        return error_response($e->getMessage(), null, Response::HTTP_NOT_FOUND);
     })->renderable(function (Throwable $e) {
         $messageWithTraceId = "";
-        if (config('app.env') == 'production') {
+        $traceId = TraceIdHelper::get();
+
+        if (config('app.env') === 'production') {
             Log::channel('slack-error')->critical($e->getMessage(), [
-                'trace_id' => app('trace_id'),
+                'trace_id' => $traceId,
                 'exception' => (string)$e,
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -61,7 +60,7 @@ function handleExceptions(Exceptions $exceptions): Exceptions
                 'ip' => request()->ip()
             ]);
 
-            $messageWithTraceId = " trace_id= " . app('trace_id');
+            $messageWithTraceId = " trace_id= " . $traceId;
         }
 
         return error_response("An unknown error occurred! Please contact support." . $messageWithTraceId, null, Response::HTTP_INTERNAL_SERVER_ERROR);
