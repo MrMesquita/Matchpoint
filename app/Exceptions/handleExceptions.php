@@ -19,8 +19,9 @@ use Throwable;
 function handleExceptions(Exceptions $exceptions): Exceptions
 {
     return $exceptions->renderable(function (NotFoundHttpException $e) {
-        if ($e->getPrevious() instanceof ModelNotFoundException) {
-            $modelName = class_basename($e->getModel());
+        $previous = $e->getPrevious();
+        if ($previous instanceof ModelNotFoundException) {
+            $modelName = class_basename($previous->getModel());
             return error_response(
                 "{$modelName} not found",
                 null,
